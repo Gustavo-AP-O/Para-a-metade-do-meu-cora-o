@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0614" />
+  <meta name="description" content="Um presente de aniversário feito por Luciele para Miguel — 16 anos de uma história que continua sendo escrita." />
+  <title>Feliz 16, Miguel — Luciele + Miguel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <link rel="icon" type="image/png" href="foto.aba.png">
+</head>
+<body>
+  <audio id="bgMusic" src="assets/musica-romantica.mp3" loop preload="auto"></audio>
+
+  <div class="aurora aurora-one"></div>
+  <div class="aurora aurora-two"></div>
+  <div class="grain"></div>
+  <div class="stars" aria-hidden="true"></div>
+  <canvas id="particleCanvas" aria-hidden="true"></canvas>
+  <div id="confetti" class="confetti-layer" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a href="index.html" class="brand" aria-label="Voltar para o início">
+      <span class="brand-mark">M</span>
+      <span class="brand-copy">
+        <strong>PARA MIGUEL</strong>
+        <small>de Luciele</small>
+      </span>
+    </a>
+
+    <nav class="chapter-nav" aria-label="Capítulos">
+      <a class="active" href="index.html">INÍCIO</a>
+      <a href="persona1.html">P1</a>
+      <a href="persona2.html">P2</a>
+      <a href="persona3.html">P3</a>
+      <a href="persona4.html">P4</a>
+      <a href="persona5.html">P5</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero birthday-hero" id="top">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span></span> 09.10.2026 · SPECIAL DAY <span></span></div>
+
+        <p class="hero-kicker">HOJE O PRESENTE É VOCÊ.</p>
+
+        <h1>
+          FELIZ ANIVERSÁRIO,
+          <span>MIGUEL.</span>
+        </h1>
+
+        <div class="hero-age" aria-label="Miguel faz 16 anos">
+          <strong>16</strong>
+          <span>anos</span>
+        </div>
+
+        <p class="hero-lead">
+          Meu amor, eu não queria apenas te desejar um parabéns clichê como os outros
+          <br />
+          vc merece algo muito maior.
+        </p>
+
+        <p class="hero-description">
+          Eu criei um pequeno universo inspirado na sua franquia de jogos favorita
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#birthday">INICIAR A SURPRESA <span>→</span></a>
+        </div>
+
+        <div class="signature">
+          <span>feito especialmente para</span>
+          <strong>Miguel</strong>
+          <span>♥</span>
+        </div>
+      </div>
+
+      <div class="hero-art reveal reveal-delay" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="birthday-glow"></div>
+
+        <div class="gift-wrap">
+          <div class="gift-shadow"></div>
+          <div class="gift-lid">
+            <span class="ribbon ribbon-horizontal"></span>
+            <span class="ribbon ribbon-vertical"></span>
+            <span class="bow bow-left"></span>
+            <span class="bow bow-right"></span>
+          </div>
+          <div class="gift-box">
+            <span class="ribbon ribbon-horizontal"></span>
+            <span class="ribbon ribbon-vertical"></span>
+            <span class="box-highlight"></span>
+          </div>
+          <div class="gift-tag">
+            <small>PARA</small>
+            <strong>MIGUEL</strong>
+            <span>♥</span>
+          </div>
+        </div>
+
+        <div class="floating-note note-one">16 ✦</div>
+        <div class="floating-note note-two">09 · 10 · 26</div>
+        <div class="floating-note note-three">♥ LUCIELE</div>
+      </div>
+    </section>
+
+    <section class="birthday-message section" id="birthday">
+      <div class="section-heading reveal">
+        <span class="section-index">00 / PRESENTE</span>
+        <h2>Não é só parabéns.<br /><em>É um lugar feito para você.</em></h2>
+      </div>
+
+      <div class="birthday-grid">
+        <article class="letter-card reveal">
+          <div class="card-topline">
+            <span>DE LUCIELE</span>
+            <span>09.10.2026</span>
+          </div>
+          <p class="letter-title">Feliz aniversário, meu amor.</p>
+          <p>
+            Hoje você completa 16 anos. E reforçando, eu quero que esse site fique guardado em um pedaçinho
+             do seu coração, com carinho, e não apenas uma mensagem que rapidamente é esquecida
+          </p>
+          <p>
+            Então fiz isso: um lugar para colocar um pouco de tudo. As lembranças, as pequenas
+            coisas, as frases, e todos os personas, grande parte dos seus amores em uma guia!
+          </p>
+          <p>
+            Aproveita muito o seu dia. Ri, comemora, faz bagunça, guarda momentos bons.
+            e tire um tempinho para explorar esse universo criado especialmente pra você💜
+          </p>
+          <div class="letter-signature">— Luciele ♥</div>
+        </article>
+
+        <aside class="birthday-card reveal reveal-delay">
+          <div class="card-shine"></div>
+          <span class="birthday-label">TODAY</span>
+          <strong>16</strong>
+          <span>um novo capítulo<br />começa aqui</span>
+          <div class="birthday-card-line"></div>
+          <small>09 / OUTUBRO / 2026</small>
+        </aside>
+      </div>
+    </section>
+
+      <div id="birthdayToday" class="birthday-today" hidden>
+        <span>09 · 10 · 2026</span>
+        <strong>HOJE É O SEU DIA, MIGUEL.</strong>
+        <p>FELIZ 16 ANOS. 🎂💜</p>
+      </div>
+    </section>
+
+    <section class="relationship-section section" id="relationship">
+      <div class="section-heading centered reveal">
+        <span class="section-index">02 / NOSSO TEMPO</span>
+        <h2>Enquanto o relógio corre...<br /><em>algumas coisas continuam aqui.</em></h2>
+        <p>
+          Desde 23 de julho de 2025, às 09:00. Calculado de verdade, a cada segundo,
+          infinitamente.
+        </p>
+      </div>
+
+      <div class="counter-shell reveal">
+        <div class="counter-topline">
+          <span>RELATIONSHIP CLOCK</span>
+          <span>23.07.2025 · 09:00</span>
+        </div>
+
+        <div class="relationship-counter" aria-live="polite">
+          <div class="counter-card" data-unit="years">
+            <span class="counter-value" id="years">00</span>
+            <span class="counter-label">ANOS</span>
+          </div>
+          <div class="counter-card" data-unit="months">
+            <span class="counter-value" id="months">00</span>
+            <span class="counter-label">MESES</span>
+          </div>
+          <div class="counter-card" data-unit="days">
+            <span class="counter-value" id="days">00</span>
+            <span class="counter-label">DIAS</span>
+          </div>
+          <div class="counter-card" data-unit="hours">
+            <span class="counter-value" id="hours">00</span>
+            <span class="counter-label">HORAS</span>
+          </div>
+          <div class="counter-card" data-unit="minutes">
+            <span class="counter-value" id="minutes">00</span>
+            <span class="counter-label">MINUTOS</span>
+          </div>
+          <div class="counter-card" data-unit="seconds">
+            <span class="counter-value" id="seconds">00</span>
+            <span class="counter-label">SEGUNDOS</span>
+          </div>
+        </div>
+
+        <div class="counter-bottomline">
+          <span>O número muda.</span>
+          <span>O motivo continua.</span>
+          <span>♥</span>
+        </div>
+      </div>
+
+      <div class="time-text reveal">
+        
+       
+      </div>
+    </section>
+
+    <section class="memory-section section">
+      <div class="section-heading reveal">
+        <span class="section-index">03 / UMA MEMÓRIA</span>
+        <h2>Algumas coisas merecem<br /><em>ficar para sempre.</em></h2>
+      </div>
+
+      <div class="memory-grid">
+        <div class="home-photo reveal">
+          <img id="homePhoto" src="home.jpeg" alt="Foto de Luciele e Miguel" />
+          <div class="photo-overlay">
+            <span>LUCIELE 💜 MIGUEL</span>
+            <span>MEMORY 01</span>
+          </div>
+        </div>
+
+        <div class="memory-copy reveal reveal-delay">
+          <span class="memory-kicker">NÃO PRECISA SER UM GRANDE MOMENTO.</span>
+          <p>
+            Às vezes é só uma conversa que demorou demais para terminar.
+            Uma risada em uma hora aleatória. Um dia comum que, por algum motivo,
+            ficou especial.
+          </p>
+          <p>
+            É desse jeito que a nossa história está crescendo, com muito amor, carinho e risadas diariamente
+          </p>
+          <div class="tiny-heart">♥</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+ <section class="future-section section">
+      <div class="future-card reveal">
+        <div class="future-grid-lines"></div>
+        <span class="section-index">04 / AINDA TEM MAIS</span>
+        <h2>O verdadeiro presente<br /><em>são as memórias que ainda faltam criar.</em></h2>
+        <p>
+          Este não é o fim do presente. É só a embalagem sendo aberta.
+          Daqui em diante, cada capítulo com referências do seu jogo favorito, revela cada parte dessa história que estamos construíndo juntos
+        </p>
+        <a href="persona1.html" class="btn btn-primary">ABRIR O CAPÍTULO 01 <span>→</span></a>
+      </div>
+    </section>
+
+  <footer class="site-footer">
+    <div>
+      <strong>FELIZ ANIVERSÁRIO, MIGUEL.</strong>
+      <span>16 anos · 09.10.2026</span>
+    </div>
+    <span>LUCIELE 💜 MIGUEL</span>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>

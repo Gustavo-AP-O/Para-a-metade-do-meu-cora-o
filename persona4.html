@@ -1,0 +1,2889 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d0800">
+  <meta name="description" content="P4 — Truth Is Waiting | Luciele + Miguel">
+  <link rel="icon" type="image/png" href="foto.aba.png">
+  <title>P4 — TRUTH IS WAITING</title>
+
+  <style>
+    :root{
+      --bg:#070500;
+      --bg2:#120c00;
+      --yellow:#ffd51a;
+      --yellow2:#fff19a;
+      --amber:#ffad00;
+      --white:#fffdf2;
+      --muted:#b3aa91;
+      --muted2:#706751;
+      --line:rgba(255,213,26,.20);
+      --line-strong:rgba(255,213,26,.55);
+      --black:#020201;
+      --red:#ff3a1f;
+      --shadow:0 30px 90px rgba(0,0,0,.55);
+      --ease:cubic-bezier(.2,.75,.2,1);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      min-height:100vh;
+      overflow-x:hidden;
+      color:var(--white);
+      background:
+        radial-gradient(circle at 50% 10%,rgba(255,213,26,.10),transparent 26%),
+        radial-gradient(circle at 18% 48%,rgba(255,173,0,.05),transparent 28%),
+        radial-gradient(circle at 85% 80%,rgba(255,213,26,.04),transparent 28%),
+        linear-gradient(160deg,#030201 0%,#0b0700 48%,#050402 100%);
+      font-family:"Segoe UI",Inter,Arial,sans-serif;
+      line-height:1.6;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:999;
+      pointer-events:none;
+      opacity:.045;
+      background:
+        linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px);
+      background-size:4px 4px;
+      mix-blend-mode:soft-light;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0 2px,
+          rgba(255,255,255,.012) 3px,
+          transparent 4px
+        );
+    }
+
+    a{color:inherit;text-decoration:none}
+    button,input{font:inherit}
+    button{border:0}
+
+    .page-transition{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      pointer-events:none;
+      opacity:0;
+      transform:scaleY(0);
+      transform-origin:bottom;
+      background:
+        radial-gradient(circle at center,rgba(255,213,26,.18),transparent 25%),
+        linear-gradient(135deg,#030201,#191000,#030201);
+      transition:opacity .18s ease,transform .38s var(--ease);
+    }
+
+    body.leaving .page-transition{
+      opacity:1;
+      transform:scaleY(1);
+      pointer-events:all;
+    }
+
+    /* NAV */
+    .topbar{
+      position:sticky;
+      top:12px;
+      z-index:50;
+      width:min(1180px,calc(100% - 32px));
+      margin:16px auto 0;
+      padding:12px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(5,4,2,.84);
+      backdrop-filter:blur(16px);
+      box-shadow:0 14px 45px rgba(0,0,0,.30);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:150px;
+    }
+
+    .brand-mark{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--line-strong);
+      border-radius:12px;
+      color:var(--yellow2);
+      background:linear-gradient(145deg,rgba(255,213,26,.12),rgba(255,255,255,.015));
+      font-weight:950;
+      letter-spacing:-1px;
+      box-shadow:inset 0 0 25px rgba(255,213,26,.05);
+    }
+
+    .brand-copy{
+      display:grid;
+      gap:0;
+    }
+
+    .brand-copy strong{
+      font-size:.78rem;
+      letter-spacing:.14em;
+    }
+
+    .brand-copy small{
+      color:var(--muted);
+      font-size:.64rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+
+    .chapter-nav{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+      gap:4px;
+    }
+
+    .chapter-nav a{
+      position:relative;
+      padding:8px 10px;
+      border-radius:9px;
+      color:#918873;
+      font-size:.70rem;
+      font-weight:900;
+      letter-spacing:.13em;
+      transition:.2s ease;
+    }
+
+    .chapter-nav a:hover,
+    .chapter-nav a.active{
+      color:#fffced;
+      background:rgba(255,213,26,.08);
+    }
+
+    .chapter-nav a.active::after{
+      content:"";
+      position:absolute;
+      left:10px;
+      right:10px;
+      bottom:4px;
+      height:2px;
+      border-radius:999px;
+      background:var(--yellow);
+      box-shadow:0 0 12px rgba(255,213,26,.75);
+    }
+
+    main{
+      width:min(1180px,calc(100% - 32px));
+      margin:auto;
+    }
+
+    section{
+      position:relative;
+      padding:110px 0;
+    }
+
+    /* GENERIC */
+    .eyebrow,
+    .section-index{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:var(--yellow2);
+      font-size:.68rem;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+
+    .eyebrow::before,
+    .section-index::before{
+      content:"";
+      width:34px;
+      height:1px;
+      background:var(--yellow);
+      box-shadow:0 0 12px rgba(255,213,26,.65);
+    }
+
+    .section-heading h2{
+      margin-top:15px;
+      max-width:850px;
+      font-size:clamp(2.4rem,5.3vw,5.1rem);
+      line-height:.92;
+      letter-spacing:-.06em;
+      text-transform:uppercase;
+    }
+
+    .section-heading h2 span{
+      color:var(--yellow);
+      text-shadow:0 0 18px rgba(255,213,26,.15);
+    }
+
+    .section-heading p{
+      max-width:720px;
+      margin-top:18px;
+      color:var(--muted);
+      font-size:.96rem;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      min-height:46px;
+      padding:0 18px;
+      border:1px solid var(--line-strong);
+      border-radius:10px;
+      color:var(--white);
+      font-size:.70rem;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      transition:transform .2s ease,border-color .2s ease,background .2s ease;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(255,241,154,.85);
+    }
+
+    .btn-primary{
+      color:#181100;
+      background:linear-gradient(135deg,#ffe33d,#e2a500);
+      box-shadow:0 15px 35px rgba(255,213,26,.12);
+    }
+
+    .btn-ghost{
+      color:#ded5bf;
+      background:rgba(255,255,255,.015);
+    }
+
+    /* HERO */
+    .hero{
+      min-height:94vh;
+      display:grid;
+      align-items:center;
+      padding-top:85px;
+      overflow:hidden;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      align-items:center;
+      gap:44px;
+    }
+
+    .hero h1{
+      margin-top:20px;
+      font-size:clamp(3.5rem,9vw,8rem);
+      line-height:.81;
+      letter-spacing:-.075em;
+      text-transform:uppercase;
+    }
+
+    .hero h1 span{
+      display:block;
+      color:var(--yellow);
+    }
+
+    .hero-lead{
+      max-width:650px;
+      margin-top:25px;
+      color:#d2c9b5;
+      font-size:clamp(1rem,1.9vw,1.18rem);
+      line-height:1.72;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:30px;
+    }
+
+    .hero-meta{
+      margin-top:24px;
+      color:#726952;
+      font-size:.64rem;
+      font-weight:800;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+
+    /* TV STAGE */
+    .tv-stage{
+      min-height:600px;
+      position:relative;
+      display:grid;
+      place-items:center;
+    }
+
+    .tv-shadow{
+      position:absolute;
+      width:76%;
+      height:14%;
+      bottom:8%;
+      background:rgba(0,0,0,.72);
+      filter:blur(20px);
+      border-radius:50%;
+    }
+
+    .tv-set{
+      width:min(540px,100%);
+      position:relative;
+      padding:20px 18px 28px;
+      background:
+        linear-gradient(155deg,#2a271e,#11100d 58%,#201d15);
+      border:1px solid rgba(255,213,26,.18);
+      border-radius:28px;
+      box-shadow:
+        0 30px 90px rgba(0,0,0,.58),
+        inset 0 1px 0 rgba(255,255,255,.06);
+      transform:rotate(-1.4deg);
+      transition:transform .3s ease;
+    }
+
+    .tv-set:hover{
+      transform:rotate(0deg) translateY(-4px);
+    }
+
+    .tv-frame{
+      position:relative;
+      padding:14px;
+      border-radius:19px;
+      background:#090806;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+
+    .tv-screen{
+      position:relative;
+      aspect-ratio:1.36;
+      overflow:hidden;
+      border-radius:11px;
+      border:2px solid #302b20;
+      background:
+        radial-gradient(circle at 50% 45%,rgba(255,214,46,.11),transparent 30%),
+        linear-gradient(135deg,#111000,#030302 60%,#15120a);
+      box-shadow:
+        inset 0 0 55px rgba(0,0,0,.86),
+        0 0 35px rgba(255,213,26,.05);
+      cursor:pointer;
+    }
+
+    .tv-screen::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0 3px,
+          rgba(255,255,255,.045) 4px,
+          transparent 5px
+        );
+      opacity:.4;
+      mix-blend-mode:screen;
+      pointer-events:none;
+      z-index:8;
+    }
+
+    .tv-screen::after{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:2px;
+      background:rgba(255,239,142,.62);
+      box-shadow:0 0 9px rgba(255,213,26,.35);
+      animation:scan 4.6s linear infinite;
+      z-index:9;
+    }
+
+    @keyframes scan{
+      0%{top:4%}
+      100%{top:97%}
+    }
+
+    .screen-glow{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 50% 50%,rgba(255,213,26,.06),transparent 42%);
+      pointer-events:none;
+    }
+
+    .screen-content{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:30px;
+      z-index:3;
+    }
+
+    .screen-channel{
+      position:absolute;
+      left:16px;
+      top:13px;
+      color:#a69b81;
+      font-size:.58rem;
+      font-weight:900;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+
+    .screen-status{
+      position:absolute;
+      right:16px;
+      top:13px;
+      color:#ffdd41;
+      font-size:.56rem;
+      font-weight:900;
+      letter-spacing:.12em;
+    }
+
+    .screen-giant{
+      font-size:clamp(4rem,10vw,7.5rem);
+      line-height:.78;
+      font-weight:950;
+      letter-spacing:-.09em;
+      color:#ffe968;
+      text-shadow:
+        0 0 22px rgba(255,213,26,.16),
+        2px 0 0 rgba(255,255,255,.04);
+      text-transform:uppercase;
+      transition:.3s ease;
+    }
+
+    .screen-sub{
+      margin-top:17px;
+      color:#aaa083;
+      font-size:.68rem;
+      font-weight:900;
+      letter-spacing:.17em;
+      text-transform:uppercase;
+    }
+
+    .screen-scan-copy{
+      margin-top:12px;
+      color:#766e5d;
+      font-size:.59rem;
+      letter-spacing:.1em;
+    }
+
+    .tv-controls{
+      margin-top:15px;
+      display:grid;
+      grid-template-columns:1fr 1fr auto;
+      align-items:center;
+      gap:10px;
+    }
+
+    .control-btn{
+      min-height:39px;
+      padding:0 12px;
+      border:1px solid rgba(255,213,26,.18);
+      border-radius:8px;
+      color:#cfc4a5;
+      background:#100f0b;
+      font-size:.61rem;
+      font-weight:900;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .control-btn:hover,
+    .control-btn.active{
+      color:#fff5a4;
+      border-color:var(--line-strong);
+      background:#1b180f;
+    }
+
+    .indicator{
+      color:#786e58;
+      font-size:.58rem;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      text-align:right;
+    }
+
+    /* CASE FILE */
+    .case-section{
+      padding-top:85px;
+    }
+
+    .case-layout{
+      margin-top:36px;
+      display:grid;
+      grid-template-columns:.82fr 1.18fr;
+      gap:18px;
+    }
+
+    .case-file,
+    .clue-panel{
+      border:1px solid var(--line);
+      border-radius:21px;
+      background:
+        linear-gradient(145deg,rgba(255,213,26,.05),rgba(255,255,255,.005)),
+        rgba(10,8,4,.86);
+      box-shadow:var(--shadow);
+    }
+
+    .case-file{
+      padding:29px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .case-file::before{
+      content:"CLASSIFIED";
+      position:absolute;
+      right:-40px;
+      top:38px;
+      padding:6px 44px;
+      border:1px solid rgba(255,213,26,.20);
+      color:rgba(255,213,26,.24);
+      transform:rotate(29deg);
+      font-size:.70rem;
+      font-weight:950;
+      letter-spacing:.15em;
+    }
+
+    .case-top{
+      display:flex;
+      justify-content:space-between;
+      gap:15px;
+      align-items:flex-start;
+    }
+
+    .case-title{
+      color:var(--yellow2);
+      font-size:.63rem;
+      font-weight:900;
+      letter-spacing:.17em;
+      text-transform:uppercase;
+    }
+
+    .case-number{
+      color:#8c815f;
+      font-size:.62rem;
+      font-weight:900;
+      letter-spacing:.12em;
+    }
+
+    .case-heading{
+      margin-top:14px;
+      font-size:clamp(2rem,4vw,3.8rem);
+      line-height:.9;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+    }
+
+    .case-heading span{color:var(--yellow)}
+
+    .case-table{
+      margin-top:26px;
+      display:grid;
+      gap:10px;
+    }
+
+    .case-row{
+      display:grid;
+      grid-template-columns:120px 1fr;
+      gap:14px;
+      padding:10px 0;
+      border-bottom:1px dashed rgba(255,213,26,.10);
+      font-size:.80rem;
+    }
+
+    .case-row label{
+      color:#736952;
+      font-size:.60rem;
+      font-weight:900;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+
+    .case-row strong{
+      color:#e8dfca;
+      font-weight:800;
+    }
+
+    .status-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 9px;
+      border:1px solid rgba(255,213,26,.24);
+      border-radius:999px;
+      color:#ffe66d;
+      background:rgba(255,213,26,.045);
+      font-size:.58rem;
+      font-weight:950;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+    }
+
+    .status-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--yellow);
+      box-shadow:0 0 10px rgba(255,213,26,.7);
+      animation:dotPulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse{
+      0%,100%{opacity:.45}
+      50%{opacity:1}
+    }
+
+    .case-note{
+      margin-top:21px;
+      padding:15px;
+      border-left:2px solid var(--yellow);
+      background:rgba(255,213,26,.035);
+      color:#a99d83;
+      font-size:.78rem;
+    }
+
+    .clue-panel{
+      padding:22px;
+    }
+
+    .clue-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:20px;
+    }
+
+    .clue-header h3{
+      font-size:2rem;
+      line-height:.96;
+      letter-spacing:-.045em;
+      text-transform:uppercase;
+    }
+
+    .clue-header p{
+      color:#7e745e;
+      font-size:.63rem;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      text-align:right;
+    }
+
+    .clue-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .clue-card{
+      min-height:250px;
+      padding:18px;
+      border:1px solid rgba(255,213,26,.12);
+      border-radius:15px;
+      background:
+        linear-gradient(145deg,rgba(255,255,255,.02),rgba(255,213,26,.02));
+      cursor:pointer;
+      transition:.22s ease;
+    }
+
+    .clue-card:hover,
+    .clue-card.active{
+      transform:translateY(-5px);
+      border-color:var(--line-strong);
+      background:rgba(255,213,26,.055);
+    }
+
+    .clue-number{
+      color:#6f654e;
+      font-size:.57rem;
+      font-weight:950;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+    }
+
+    .clue-card h4{
+      margin-top:11px;
+      font-size:1rem;
+      line-height:1;
+      text-transform:uppercase;
+    }
+
+    .clue-icon{
+      height:84px;
+      margin-top:15px;
+      display:grid;
+      place-items:center;
+      border:1px dashed rgba(255,213,26,.12);
+      border-radius:11px;
+      color:var(--yellow);
+      font-size:2.2rem;
+      background:rgba(0,0,0,.18);
+    }
+
+    .clue-card p{
+      margin-top:13px;
+      color:#a69a80;
+      font-size:.76rem;
+    }
+
+    .clue-detail{
+      margin-top:14px;
+      padding:16px 17px;
+      border:1px solid rgba(255,213,26,.14);
+      border-radius:12px;
+      color:#cbc0a6;
+      background:rgba(255,213,26,.03);
+      font-size:.80rem;
+      min-height:75px;
+    }
+
+    .clue-detail strong{color:#fff1a4}
+
+    /* TV WORLD / GLITCH */
+    .tvworld{
+      overflow:hidden;
+    }
+
+    .tvworld-stage{
+      margin-top:36px;
+      min-height:490px;
+      position:relative;
+      border:1px solid var(--line);
+      border-radius:22px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 50% 44%,rgba(255,213,26,.08),transparent 27%),
+        #050402;
+      box-shadow:var(--shadow);
+    }
+
+    .static{
+      position:absolute;
+      inset:0;
+      opacity:.08;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0 2px,
+          rgba(255,255,255,.20) 3px,
+          transparent 4px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0 4px,
+          rgba(255,255,255,.12) 5px,
+          transparent 6px
+        );
+      animation:staticShift .14s steps(2,end) infinite;
+    }
+
+    @keyframes staticShift{
+      0%{transform:translate(0,0)}
+      25%{transform:translate(-2px,1px)}
+      50%{transform:translate(2px,-1px)}
+      75%{transform:translate(1px,2px)}
+      100%{transform:translate(0,0)}
+    }
+
+    .tvworld-center{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:40px;
+    }
+
+    .signal{
+      color:#72684f;
+      font-size:.58rem;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+
+    .truth-word{
+      margin-top:11px;
+      font-size:clamp(3rem,9vw,7rem);
+      line-height:.80;
+      font-weight:950;
+      letter-spacing:-.08em;
+      text-transform:uppercase;
+      color:#fff4a5;
+      text-shadow:
+        3px 0 0 rgba(255,57,31,.16),
+        -3px 0 0 rgba(255,213,26,.10);
+    }
+
+    .truth-sub{
+      margin-top:17px;
+      color:#aa9f83;
+      font-size:.73rem;
+      font-weight:900;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+
+    .channel-label{
+      position:absolute;
+      left:20px;
+      top:18px;
+      color:#84795f;
+      font-size:.58rem;
+      font-weight:900;
+      letter-spacing:.12em;
+    }
+
+    .signal-corner{
+      position:absolute;
+      right:20px;
+      top:18px;
+      color:#827760;
+      font-size:.58rem;
+      font-weight:900;
+      letter-spacing:.12em;
+    }
+
+    .interference-bar{
+      position:absolute;
+      left:0;
+      right:0;
+      height:16px;
+      background:rgba(255,213,26,.055);
+      transform:skewX(-18deg);
+      animation:interf 3.8s steps(2,end) infinite;
+    }
+
+    @keyframes interf{
+      0%,80%,100%{top:22%;opacity:.12}
+      82%{top:30%;opacity:.9}
+      85%{top:58%;opacity:.35}
+      88%{top:44%;opacity:.8}
+    }
+
+    .tvworld-message{
+      position:absolute;
+      left:22px;
+      bottom:19px;
+      max-width:330px;
+      color:#675e4d;
+      font-size:.59rem;
+      letter-spacing:.07em;
+      text-transform:uppercase;
+    }
+
+
+    /* ============================================================
+       PHOTO MEMORY TV — SIMPLE
+    ============================================================ */
+
+    .memory-tv-section{
+      padding-top:72px;
+    }
+
+    .memory-tv-simple{
+      margin:34px auto 0;
+      width:min(760px,100%);
+    }
+
+    .memory-tv{
+      position:relative;
+      padding:18px 18px 28px;
+      border:1px solid rgba(255,213,26,.20);
+      border-radius:28px 28px 36px 36px;
+      background:
+        linear-gradient(155deg,#2b281f,#11100d 58%,#201d15);
+      box-shadow:
+        0 30px 90px rgba(0,0,0,.58),
+        inset 0 1px 0 rgba(255,255,255,.06);
+      transform:rotate(.6deg);
+      overflow:hidden;
+    }
+
+    .memory-tv::before{
+      content:"MEMORY CHANNEL";
+      position:absolute;
+      top:8px;
+      left:22px;
+      color:#6e664f;
+      font-size:.48rem;
+      font-weight:900;
+      letter-spacing:.16em;
+      z-index:3;
+    }
+
+    .memory-tv::after{
+      content:"";
+      position:absolute;
+      left:12%;
+      right:12%;
+      bottom:8px;
+      height:8px;
+      border-radius:999px;
+      background:#16140f;
+      box-shadow:0 2px 10px rgba(0,0,0,.45);
+    }
+
+    .memory-screen-frame{
+      padding:14px;
+      border-radius:21px;
+      background:#080705;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.035);
+    }
+
+    .memory-screen{
+      position:relative;
+      width:100%;
+      aspect-ratio:16/10;
+      min-height:360px;
+      overflow:hidden;
+      border:2px solid #332e22;
+      border-radius:13px 13px 19px 19px;
+      background:
+        radial-gradient(circle at 50% 45%,rgba(255,214,46,.08),transparent 32%),
+        linear-gradient(135deg,#121107,#030302 60%,#15120a);
+      cursor:pointer;
+      isolation:isolate;
+    }
+
+    .memory-screen::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:5;
+      pointer-events:none;
+      opacity:.42;
+      background:repeating-linear-gradient(
+        0deg,
+        transparent 0 3px,
+        rgba(255,255,255,.05) 4px,
+        transparent 5px
+      );
+      mix-blend-mode:screen;
+    }
+
+    .memory-screen::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      top:5%;
+      height:2px;
+      z-index:8;
+      background:rgba(255,239,142,.55);
+      box-shadow:0 0 10px rgba(255,213,26,.35);
+      animation:memoryScan 4.2s linear infinite;
+      pointer-events:none;
+    }
+
+    @keyframes memoryScan{
+      0%{top:5%}
+      100%{top:95%}
+    }
+
+    .memory-photo{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      object-position:center;
+      background:#000;
+      opacity:0;
+      filter:saturate(.82) contrast(1.05) brightness(.76) sepia(.08);
+      transition:opacity .35s ease,transform .55s var(--ease),filter .35s ease;
+    }
+
+    .memory-photo.loaded{
+      opacity:.94;
+    }
+
+    .memory-screen:hover .memory-photo.loaded{
+      transform:none;
+      filter:saturate(.92) contrast(1.06) brightness(.88) sepia(.04);
+    }
+
+    .memory-vignette{
+      position:absolute;
+      inset:0;
+      z-index:3;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at center,transparent 39%,rgba(0,0,0,.52) 100%),
+        linear-gradient(180deg,rgba(0,0,0,.16),transparent 24%,transparent 75%,rgba(0,0,0,.34));
+    }
+
+    .memory-placeholder{
+      position:absolute;
+      inset:0;
+      z-index:2;
+      display:grid;
+      place-items:center;
+      padding:30px;
+      text-align:center;
+      background:
+        radial-gradient(circle at 50% 43%,rgba(255,213,26,.10),transparent 31%),
+        #070604;
+      transition:opacity .28s ease;
+    }
+
+    .memory-placeholder.hidden{
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .memory-placeholder strong{
+      display:block;
+      color:#fff0a0;
+      font-size:clamp(1.7rem,4vw,3rem);
+      line-height:.9;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+    }
+
+    .memory-placeholder span{
+      display:block;
+      margin-top:12px;
+      color:#887b61;
+      font-size:.64rem;
+      font-weight:800;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .memory-screen-top{
+      position:absolute;
+      left:15px;
+      right:15px;
+      top:13px;
+      z-index:7;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      color:#b8aa8b;
+      font-size:.54rem;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      pointer-events:none;
+    }
+
+    .memory-file-input{
+      display:none;
+    }
+
+    .memory-tv-tip{
+      margin-top:10px;
+      text-align:center;
+      color:#766d58;
+      font-size:.58rem;
+      font-weight:900;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+    }
+
+    .memory-screen.glitching{
+      animation:memoryGlitch .22s steps(2,end) 2;
+    }
+
+    @keyframes memoryGlitch{
+      0%{transform:translate(0);filter:none}
+      25%{transform:translate(-3px,1px);filter:drop-shadow(3px 0 rgba(255,58,31,.5))}
+      50%{transform:translate(3px,-1px);filter:drop-shadow(-3px 0 rgba(255,213,26,.4))}
+      75%{transform:translate(-1px,0)}
+      100%{transform:translate(0);filter:none}
+    }
+
+   /* ============================================================
+   MEMORY PHOTO
+============================================================ */
+
+.photo-section{
+  padding-top:80px;
+}
+
+.memory-photo-area{
+  margin-top:38px;
+  display:flex;
+  justify-content:center;
+}
+
+.memory-photo-frame{
+  width:min(760px,100%);
+  padding:18px;
+
+  position:relative;
+
+  border:1px solid rgba(255,213,26,.28);
+  border-radius:24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #29261e 0%,
+      #11100d 55%,
+      #201d15 100%
+    );
+
+  box-shadow:
+    0 35px 90px rgba(0,0,0,.60),
+    inset 0 1px 0 rgba(255,255,255,.06);
+
+  transform:rotate(-.6deg);
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease,
+    border-color .3s ease;
+}
+
+.memory-photo-frame:hover{
+  transform:rotate(0deg) translateY(-5px);
+
+  border-color:rgba(255,213,26,.55);
+
+  box-shadow:
+    0 40px 100px rgba(0,0,0,.70),
+    0 0 35px rgba(255,213,26,.08),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* TOP BAR */
+
+.memory-photo-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:2px 4px 12px;
+
+  color:#81765e;
+
+  font-size:.55rem;
+  font-weight:900;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+.memory-photo-top span:last-child{
+  color:#d8b726;
+}
+
+/* SCREEN */
+
+.memory-photo-screen{
+  position:relative;
+
+  width:100%;
+  aspect-ratio:16/10;
+
+  overflow:hidden;
+
+  border:2px solid #353024;
+  border-radius:16px;
+
+  background:#000;
+
+  box-shadow:
+    inset 0 0 60px rgba(0,0,0,.85),
+    0 0 25px rgba(0,0,0,.45);
+}
+
+/* FOTO */
+
+.memory-photo-screen img{
+  width:100%;
+  height:100%;
+  display:block;
+
+  object-fit:cover;
+  object-position:center;
+
+  filter:
+    saturate(.88)
+    contrast(1.05)
+    brightness(.82)
+    sepia(.04);
+
+  transition:
+    transform .6s var(--ease),
+    filter .4s ease;
+}
+
+.memory-photo-frame:hover .memory-photo-screen img{
+  transform:scale(1.025);
+
+  filter:
+    saturate(.98)
+    contrast(1.06)
+    brightness(.92)
+    sepia(.02);
+}
+
+/* SCANLINES DA TV */
+
+.photo-scan{
+  position:absolute;
+  inset:0;
+
+  pointer-events:none;
+
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 3px,
+      rgba(255,255,255,.045) 4px,
+      transparent 5px
+    );
+
+  opacity:.42;
+
+  mix-blend-mode:screen;
+}
+
+/* BRILHO NAS BORDAS */
+
+.memory-photo-screen::before{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  pointer-events:none;
+  z-index:2;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 42%,
+      rgba(0,0,0,.48) 100%
+    );
+}
+
+/* LINHA DE SCAN */
+
+.memory-photo-screen::after{
+  content:"";
+
+  position:absolute;
+
+  left:0;
+  right:0;
+  top:5%;
+
+  height:2px;
+
+  pointer-events:none;
+  z-index:3;
+
+  background:rgba(255,239,142,.52);
+
+  box-shadow:
+    0 0 10px rgba(255,213,26,.30);
+
+  animation:photoScanLine 4.5s linear infinite;
+}
+
+@keyframes photoScanLine{
+
+  0%{
+    top:5%;
+  }
+
+  100%{
+    top:95%;
+  }
+
+}
+
+/* BOTTOM INFO */
+
+.memory-photo-bottom{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+
+  gap:15px;
+
+  padding:13px 4px 2px;
+
+  color:#716752;
+
+  font-size:.53rem;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.memory-photo-bottom strong{
+  color:#e6d37b;
+  font-size:.57rem;
+  text-align:center;
+}
+
+.memory-photo-bottom span:last-child{
+  text-align:right;
+}
+
+/* CANTOS DECORATIVOS */
+
+.memory-photo-frame::before,
+.memory-photo-frame::after{
+  content:"";
+
+  position:absolute;
+
+  width:28px;
+  height:28px;
+
+  border-color:rgba(255,213,26,.65);
+  border-style:solid;
+
+  pointer-events:none;
+}
+
+.memory-photo-frame::before{
+  top:10px;
+  left:10px;
+
+  border-width:2px 0 0 2px;
+
+  border-radius:7px 0 0 0;
+}
+
+.memory-photo-frame::after{
+  right:10px;
+  bottom:10px;
+
+  border-width:0 2px 2px 0;
+
+  border-radius:0 0 7px 0;
+}
+
+@media (max-width:680px){
+
+  .memory-photo-frame{
+    padding:11px;
+    border-radius:18px;
+  }
+
+  .memory-photo-top{
+    font-size:.46rem;
+  }
+
+  .memory-photo-bottom{
+    grid-template-columns:1fr auto;
+    gap:8px;
+  }
+
+  .memory-photo-bottom strong{
+    display:none;
+  }
+
+}
+
+    /* FINAL VERDICT */
+    .verdict{
+      padding-bottom:95px;
+    }
+
+    .verdict-box{
+      margin-top:32px;
+      padding:46px 30px;
+      border:1px solid var(--line-strong);
+      border-radius:22px;
+      text-align:center;
+      background:
+        radial-gradient(circle at center,rgba(255,213,26,.09),transparent 50%),
+        rgba(8,6,3,.84);
+      box-shadow:var(--shadow);
+    }
+
+    .verdict-box small{
+      color:var(--yellow2);
+      font-size:.60rem;
+      font-weight:900;
+      letter-spacing:.18em;
+    }
+
+    .verdict-title{
+      margin-top:15px;
+      font-size:clamp(2.6rem,6vw,5.5rem);
+      line-height:.88;
+      letter-spacing:-.065em;
+      text-transform:uppercase;
+    }
+
+    .verdict-title span{
+      color:var(--yellow);
+    }
+
+    .verdict-result{
+      margin:22px auto 0;
+      max-width:720px;
+      padding:17px 18px;
+      border:1px solid rgba(255,213,26,.16);
+      border-radius:12px;
+      background:rgba(255,213,26,.035);
+      color:#ded4bd;
+      font-size:1rem;
+    }
+
+    .verdict-note{
+      margin-top:18px;
+      color:#93876f;
+      font-size:.82rem;
+    }
+
+    .verdict-seal{
+      width:92px;
+      height:92px;
+      margin:28px auto 0;
+      display:grid;
+      place-items:center;
+      border:2px solid rgba(255,213,26,.48);
+      border-radius:50%;
+      color:var(--yellow2);
+      font-weight:950;
+      letter-spacing:.06em;
+      box-shadow:
+        0 0 25px rgba(255,213,26,.12),
+        inset 0 0 18px rgba(255,213,26,.04);
+      animation:sealPulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes sealPulse{
+      0%,100%{transform:scale(1);box-shadow:0 0 25px rgba(255,213,26,.10)}
+      50%{transform:scale(1.04);box-shadow:0 0 40px rgba(255,213,26,.24)}
+    }
+
+    .romantic-note{
+      max-width:700px;
+      margin:25px auto 0;
+      color:#b7ac95;
+      font-size:.88rem;
+      line-height:1.8;
+    }
+
+    .chapter-buttons{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .chapter-button{
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      padding:14px 18px;
+      border:1px solid var(--line);
+      border-radius:15px;
+      background:rgba(255,255,255,.015);
+      transition:.2s ease;
+    }
+
+    .chapter-button:hover{
+      border-color:var(--line-strong);
+      transform:translateY(-2px);
+      background:rgba(255,213,26,.04);
+    }
+
+    .chapter-button small{
+      display:block;
+      color:var(--muted2);
+      font-size:.56rem;
+      font-weight:900;
+      letter-spacing:.13em;
+    }
+
+    .chapter-button strong{
+      display:block;
+      margin-top:3px;
+      font-size:.90rem;
+      text-transform:uppercase;
+    }
+
+    .chapter-num{
+      color:var(--yellow2);
+      font-size:.90rem;
+      font-weight:900;
+    }
+
+    footer{
+      padding:28px 20px 44px;
+      border-top:1px solid rgba(255,255,255,.05);
+      color:#665e4c;
+      text-align:center;
+      font-size:.61rem;
+      font-weight:800;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    /* REVEAL */
+    .reveal{
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity .72s var(--ease),transform .72s var(--ease);
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .glitch{
+      animation:glitch .24s steps(2,end);
+    }
+
+    @keyframes glitch{
+      0%{transform:translateX(0);filter:none}
+      25%{transform:translateX(-3px);filter:drop-shadow(3px 0 rgba(255,58,31,.6))}
+      50%{transform:translateX(3px);filter:drop-shadow(-3px 0 rgba(255,213,26,.4))}
+      75%{transform:translateX(-1px)}
+      100%{transform:translateX(0);filter:none}
+    }
+
+    /* MUSIC */
+    .music-button{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:60;
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--line-strong);
+      border-radius:50%;
+      color:var(--yellow2);
+      background:rgba(7,5,1,.88);
+      backdrop-filter:blur(12px);
+      box-shadow:0 12px 30px rgba(0,0,0,.35);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .music-button:hover{
+      transform:translateY(-2px);
+      border-color:var(--yellow2);
+    }
+
+    .music-button.playing{
+      animation:musicPulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes musicPulse{
+      0%,100%{box-shadow:0 0 0 0 rgba(255,213,26,0),0 12px 30px rgba(0,0,0,.35)}
+      50%{box-shadow:0 0 0 8px rgba(255,213,26,.05),0 12px 30px rgba(0,0,0,.35)}
+    }
+
+    @media (max-width:950px){
+      .hero-grid,
+      .case-layout{
+        grid-template-columns:1fr;
+      }
+
+      .tv-stage{
+        min-height:500px;
+      }
+
+      .clue-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+
+
+    @media (max-width:680px){
+      .topbar{
+        width:calc(100% - 16px);
+        margin-top:8px;
+        top:8px;
+        padding:9px;
+      }
+
+      .brand{
+        min-width:auto;
+      }
+
+      .brand-copy{
+        display:none;
+      }
+
+      .chapter-nav{
+        width:100%;
+        justify-content:flex-end;
+      }
+
+      .chapter-nav a{
+        padding:7px;
+        font-size:.60rem;
+      }
+
+      main{
+        width:calc(100% - 20px);
+      }
+
+      section{
+        padding:78px 0;
+      }
+
+      .hero{
+        padding-top:60px;
+      }
+
+      .hero h1{
+        font-size:clamp(3rem,17vw,5.4rem);
+      }
+
+      .tv-stage{
+        min-height:390px;
+      }
+
+      .tv-set{
+        padding:12px 10px 18px;
+        border-radius:20px;
+      }
+
+      .tv-frame{
+        padding:9px;
+      }
+
+      .tv-controls{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .indicator{
+        grid-column:1/-1;
+        text-align:left;
+      }
+
+      .clue-grid{
+        grid-template-columns:1fr;
+      }
+
+      .case-row{
+        grid-template-columns:92px 1fr;
+      }
+
+      .memory-tv{
+        padding:11px 10px 20px;
+        border-radius:20px 20px 28px 28px;
+      }
+
+      .memory-screen-frame{
+        padding:8px;
+      }
+
+      .memory-screen{
+        min-height:230px;
+      }
+
+      .memory-placeholder strong{
+        font-size:1.35rem;
+      }
+
+      .memory-placeholder span{
+        font-size:.54rem;
+      }
+
+      .chapter-buttons{
+        grid-template-columns:1fr;
+      }
+    }
+
+    
+  </style>
+</head>
+
+<body>
+
+  <div class="page-transition"></div>
+
+  <!-- NAV -->
+  <header class="topbar">
+    <a class="brand page-link" href="index.html" aria-label="Voltar para o início">
+      <div class="brand-mark">L+M</div>
+
+      <div class="brand-copy">
+        <strong>LUCIELE + MIGUEL</strong>
+        <small>chapter 04 · truth investigation</small>
+      </div>
+    </a>
+
+    <nav class="chapter-nav" aria-label="Capítulos">
+      <a class="page-link" href="index.html">INÍCIO</a>
+      <a class="page-link" href="persona1.html">P1</a>
+      <a class="page-link" href="persona2.html">P2</a>
+      <a class="page-link" href="persona3.html">P3</a>
+      <a class="page-link active" href="persona4.html">P4</a>
+      <a class="page-link" href="persona5.html">P5</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ==========================================================
+         HERO
+    =========================================================== -->
+    <section class="hero">
+
+      <div class="hero-grid">
+
+        <div class="reveal">
+
+          <div class="eyebrow">
+            P4 · TRUTH INVESTIGATION / RECORD 04
+          </div>
+
+          <h1>
+            TRUTH
+            <span>IS WAITING.</span>
+          </h1>
+
+          <p class="hero-lead">
+            A investigação começou com uma pergunta simples:
+            <strong>quem é Miguel?</strong>
+            <br><br>
+            Depois de analisar as evidências,
+            o caso ficou um pouco mais complicado.
+          </p>
+
+          <div class="hero-actions">
+
+            <a class="btn btn-primary" href="#case-file">
+              ABRIR CASE FILE →
+            </a>
+
+            <a class="btn btn-ghost" href="#clues">
+              VER PISTAS ↓
+            </a>
+
+          </div>
+
+          <div class="hero-meta">
+            SIGNAL FOUND · CHANNEL 04 · TRUTH NETWORK
+          </div>
+
+        </div>
+
+
+        <!-- TV -->
+        <div class="tv-stage reveal">
+
+          <div class="tv-shadow"></div>
+
+          <div class="tv-set" id="tvSet">
+
+            <div class="tv-frame">
+
+              <div class="tv-screen" id="tvScreen">
+
+                <div class="screen-channel" id="screenChannel">
+                  CH. 04
+                </div>
+
+                <div class="screen-status" id="screenStatus">
+                  LIVE
+                </div>
+
+                <div class="screen-glow"></div>
+
+                <div class="screen-content">
+
+                  <div>
+
+                    <div class="screen-giant" id="screenWord">
+                      WHO?
+                    </div>
+
+                    <div class="screen-sub" id="screenSub">
+                      signal detected
+                    </div>
+
+                    <div class="screen-scan-copy" id="screenCopy">
+                      click the screen to change the signal
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="tv-controls">
+
+              <button class="control-btn" id="prevChannel">
+                ← CHANNEL
+              </button>
+
+              <button class="control-btn" id="nextChannel">
+                CHANNEL →
+              </button>
+
+              <div class="indicator" id="channelIndicator">
+                SIGNAL 01 / 04
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         CASE FILE
+    =========================================================== -->
+    <section class="case-section" id="case-file">
+
+      <div class="section-heading reveal">
+
+        <div class="section-index">
+          01 / CASE FILE
+        </div>
+
+        <h2>
+          O CASO
+          <br>
+          <span>#0723.</span>
+        </h2>
+
+        <p>
+          A equipe encontrou datas, horários, mensagens,
+          memórias e uma quantidade suspeita de carinho.
+          O arquivo já não parece muito imparcial.
+        </p>
+
+      </div>
+
+
+      <div class="case-layout">
+
+        <!-- CASE -->
+        <article class="case-file reveal">
+
+          <div class="case-top">
+
+            <div class="case-title">
+              CONFIDENTIAL CASE RECORD
+            </div>
+
+            <div class="case-number">
+              #0723
+            </div>
+
+          </div>
+
+
+          <div class="case-heading">
+            SUSPEITO:
+            <br>
+            <span>MIGUEL.</span>
+          </div>
+
+
+          <div class="case-table">
+
+            <div class="case-row">
+              <label>STATUS</label>
+
+              <div>
+                <span class="status-badge">
+                  <span class="status-dot"></span>
+                  PROVAVELMENTE APAIXONADO.
+                </span>
+              </div>
+            </div>
+
+
+            <div class="case-row">
+              <label>DATE</label>
+              <strong>23/07/2025</strong>
+            </div>
+
+
+            <div class="case-row">
+              <label>TIME</label>
+              <strong>09:00</strong>
+            </div>
+
+
+            <div class="case-row">
+              <label>EVIDENCE</label>
+              <strong>mensagens · memórias · amor</strong>
+            </div>
+
+
+            <div class="case-row">
+              <label>CASE TYPE</label>
+              <strong>conexão suspeitamente intensa</strong>
+            </div>
+
+          </div>
+
+
+          <div class="case-note">
+            <strong style="color:#fff09c">
+              Nota do investigador:
+            </strong>
+            todas as linhas de investigação parecem
+            levar para o mesmo lugar.
+          </div>
+
+        </article>
+
+
+        <!-- CLUE PANEL -->
+        <article class="clue-panel reveal" id="clues">
+
+          <div class="clue-header">
+
+            <div>
+              <div class="section-index">
+                EVIDENCE BOARD
+              </div>
+
+              <h3>
+                TRÊS PISTAS.
+              </h3>
+            </div>
+
+            <p>
+              selecione uma prova
+            </p>
+
+          </div>
+
+
+          <div class="clue-grid">
+
+            <article class="clue-card active" data-clue="0">
+
+              <div class="clue-number">
+                CLUE 01
+              </div>
+
+              <h4>
+                A DATA
+              </h4>
+
+              <div class="clue-icon">
+                23/07
+              </div>
+
+              <p>
+                Primeiro ponto registrado
+                no arquivo.
+              </p>
+
+            </article>
+
+
+            <article class="clue-card" data-clue="1">
+
+              <div class="clue-number">
+                CLUE 02
+              </div>
+
+              <h4>
+                O HORÁRIO
+              </h4>
+
+              <div class="clue-icon">
+                09:00
+              </div>
+
+              <p>
+                Um horário aparentemente
+                comum.
+              </p>
+
+            </article>
+
+
+            <article class="clue-card" data-clue="2">
+
+              <div class="clue-number">
+                CLUE 03
+              </div>
+
+              <h4>
+                AS MENSAGENS
+              </h4>
+
+              <div class="clue-icon">
+                ♥
+              </div>
+
+              <p>
+                O arquivo começou a ficar
+                emocionalmente comprometido.
+              </p>
+
+            </article>
+
+          </div>
+
+
+          <div class="clue-detail" id="clueDetail">
+            <strong>CLUE 01:</strong>
+            a data 23/07/2025 aparece como o
+            primeiro marco relevante do caso.
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         TV WORLD
+    =========================================================== -->
+    <section class="tvworld">
+
+      <div class="section-heading reveal">
+
+        <div class="section-index">
+          02 / SIGNAL INTERFERENCE
+        </div>
+
+        <h2>
+          A TELA ESTÁ
+          <br>
+          <span>TENTANDO DIZER ALGUMA COISA.</span>
+        </h2>
+
+        <p>
+          Quando a investigação se aproxima demais da verdade,
+          o sinal começa a falhar.
+        </p>
+
+      </div>
+
+
+      <div class="tvworld-stage reveal">
+
+        <div class="static"></div>
+
+        <div class="interference-bar"></div>
+
+        <div class="channel-label">
+          CHANNEL 04 · UNSTABLE
+        </div>
+
+        <div class="signal-corner">
+          NOISE DETECTED
+        </div>
+
+
+        <div class="tvworld-center">
+
+          <div>
+
+            <div class="signal">
+              SIGNAL RECOVERED
+            </div>
+
+            <div class="truth-word" id="truthWord">
+              WHO?
+            </div>
+
+            <div class="truth-sub" id="truthSub">
+              searching...
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="tvworld-message" id="tvWorldMessage">
+          PRESS THE CLUES · WATCH THE SIGNAL · FIND THE ANSWER
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+   <!-- ==========================================================
+     MEMORY ARCHIVE / PHOTO
+=========================================================== -->
+<section class="photo-section">
+
+  <div class="section-heading reveal">
+
+    <div class="section-index">
+      03 / MEMORY ARCHIVE
+    </div>
+
+    <h2>
+      UMA MEMÓRIA
+      <br>
+      <span>NO AR.</span>
+    </h2>
+
+    <p>
+      Algumas memórias merecem seu próprio canal.
+      Esta é uma delas.
+    </p>
+
+  </div>
+
+  <div class="memory-photo-area reveal">
+
+    <div class="memory-photo-frame">
+
+      <div class="memory-photo-top">
+        <span>CH. 23 · MEMORY</span>
+        <span>● ARCHIVE</span>
+      </div>
+
+      <div class="memory-photo-screen">
+
+        <!-- TROQUE APENAS O NOME DA FOTO AQUI -->
+        <img
+          src="2foto persona4.jpeg"
+          alt="Foto especial de Luciele e Miguel"
+        >
+
+        <div class="photo-scan"></div>
+
+      </div>
+
+      <div class="memory-photo-bottom">
+        <span>CASE #0723</span>
+        <strong>PERSONAL MEMORY</strong>
+        <span>04 / 04</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+    <!-- ==========================================================
+         FINAL VERDICT
+    =========================================================== -->
+    <section class="verdict">
+
+      <div class="section-heading reveal">
+
+        <div class="section-index">
+          03 / FINAL VERDICT
+        </div>
+
+        <h2>
+          CASE
+          <br>
+          <span>CLOSED?</span>
+        </h2>
+
+        <p>
+          A equipe reuniu todas as provas.
+          Agora falta apenas uma coisa:
+          decidir se o caso está realmente encerrado.
+        </p>
+
+      </div>
+
+
+      <div class="verdict-box reveal">
+
+        <small>
+          CASE FILE #0723 · FINAL REPORT
+        </small>
+
+        <div class="verdict-title">
+          CASE <span>ALMOST</span> CLOSED.
+        </div>
+
+
+        <div class="verdict-result">
+          <strong style="color:#fff09c">
+            VEREDITO:
+          </strong>
+          depois de analisar as evidências,
+          a investigação encontrou uma conclusão
+          impossível de ignorar:
+          <strong style="color:#fff09c">
+            a verdade é você.
+          </strong>
+        </div>
+
+
+        <div class="verdict-note">
+          Motivo da não-finalização oficial:
+          o investigador prefere continuar
+          colecionando provas.
+        </div>
+
+
+        <div class="verdict-seal">
+          ♥
+        </div>
+
+
+        <div class="romantic-note">
+          “No meio de tantas pistas, horários,
+          lembranças e mensagens,
+          foi engraçado perceber que a resposta
+          estava ali desde o começo.”
+          <br><br>
+          — Luciele
+        </div>
+
+      </div>
+
+
+      <div class="chapter-buttons">
+
+        <a class="chapter-button page-link" href="persona3.html">
+
+          <div>
+            <small>ANTERIOR</small>
+            <strong>← VOLTAR PARA P3</strong>
+          </div>
+
+          <span class="chapter-num">03</span>
+
+        </a>
+
+
+        <a class="chapter-button page-link" href="persona5.html">
+
+          <div>
+            <small>PRÓXIMO</small>
+            <strong>IR PARA P5 →</strong>
+          </div>
+
+          <span class="chapter-num">05</span>
+
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    P4 · TRUTH IS WAITING · LUCIELE + MIGUEL
+  </footer>
+
+
+  <!-- MUSIC -->
+  <audio id="pageMusic" src="assets/musica-p4.mp3" loop preload="auto"></audio>
+
+
+
+  <script>
+    /* ============================================================
+       PAGE TRANSITION
+    ============================================================ */
+
+    document.querySelectorAll(".page-link").forEach(link => {
+
+      link.addEventListener("click", event => {
+
+        const href = link.getAttribute("href");
+
+        if (!href || href.startsWith("#") || href.startsWith("http")) {
+          return;
+        }
+
+        event.preventDefault();
+
+        document.body.classList.add("leaving");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 280);
+
+      });
+
+    });
+
+
+    /* ============================================================
+       REVEAL
+    ============================================================ */
+
+    const revealElements =
+      document.querySelectorAll(".reveal");
+
+    const revealObserver =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+              entry.target.classList.add("visible");
+
+              revealObserver.unobserve(
+                entry.target
+              );
+
+            }
+
+          });
+
+        },
+        {
+          threshold:0.12,
+          rootMargin:"0px 0px -30px"
+        }
+      );
+
+
+    revealElements.forEach((element,index) => {
+
+      element.style.transitionDelay =
+        `${(index % 5) * 60}ms`;
+
+      revealObserver.observe(element);
+
+    });
+
+
+    /* ============================================================
+       TELEVISION CHANNELS
+    ============================================================ */
+
+    const channels = [
+
+      {
+        word:"WHO?",
+        sub:"signal detected",
+        copy:"unknown subject identified",
+        channel:"CH. 04"
+      },
+
+      {
+        word:"♥",
+        sub:"emotional signal",
+        copy:"unexpected affection detected",
+        channel:"CH. 07"
+      },
+
+      {
+        word:"MIGUEL",
+        sub:"subject confirmed",
+        copy:"identity match: 100%",
+        channel:"CH. 23"
+      },
+
+      {
+        word:"LOVE",
+        sub:"case interference",
+        copy:"investigation compromised",
+        channel:"CH. 09"
+      }
+
+    ];
+
+
+    let currentChannel = 0;
+
+
+    const screenWord =
+      document.getElementById("screenWord");
+
+    const screenSub =
+      document.getElementById("screenSub");
+
+    const screenCopy =
+      document.getElementById("screenCopy");
+
+    const screenChannel =
+      document.getElementById("screenChannel");
+
+    const screenStatus =
+      document.getElementById("screenStatus");
+
+    const channelIndicator =
+      document.getElementById("channelIndicator");
+
+    const tvScreen =
+      document.getElementById("tvScreen");
+
+
+    function showChannel(index) {
+
+      currentChannel =
+        (index + channels.length) %
+        channels.length;
+
+
+      const channel =
+        channels[currentChannel];
+
+
+      [
+        screenWord,
+        screenSub,
+        screenCopy
+      ].forEach(element => {
+
+        element.classList.remove("glitch");
+
+        void element.offsetWidth;
+
+        element.classList.add("glitch");
+
+      });
+
+
+      screenWord.textContent =
+        channel.word;
+
+      screenSub.textContent =
+        channel.sub;
+
+      screenCopy.textContent =
+        channel.copy;
+
+      screenChannel.textContent =
+        channel.channel;
+
+      channelIndicator.textContent =
+        `SIGNAL ${String(currentChannel + 1).padStart(2,"0")} / ${String(channels.length).padStart(2,"0")}`;
+
+      screenStatus.textContent =
+        currentChannel === 3
+          ? "INTERFERENCE"
+          : "LIVE";
+
+    }
+
+
+    document
+      .getElementById("prevChannel")
+      .addEventListener("click",() => {
+
+        showChannel(currentChannel - 1);
+
+      });
+
+
+    document
+      .getElementById("nextChannel")
+      .addEventListener("click",() => {
+
+        showChannel(currentChannel + 1);
+
+      });
+
+
+    tvScreen.addEventListener("click",() => {
+
+      showChannel(currentChannel + 1);
+
+    });
+
+
+    /* ============================================================
+       CLUES
+    ============================================================ */
+
+    const clues = [
+
+      {
+        title:"CLUE 01",
+        text:
+          "a data 23/07/2025 aparece como o primeiro " +
+          "marco relevante do caso."
+      },
+
+      {
+        title:"CLUE 02",
+        text:
+          "09:00. Um horário comum no papel, " +
+          "mas impossível de ignorar quando colocado " +
+          "ao lado da data anterior."
+      },
+
+      {
+        title:"CLUE 03",
+        text:
+          "mensagens, memórias e carinho em excesso " +
+          "formaram uma prova que o investigador " +
+          "não conseguiu classificar como coincidência."
+      }
+
+    ];
+
+
+    const clueCards =
+      document.querySelectorAll(".clue-card");
+
+    const clueDetail =
+      document.getElementById("clueDetail");
+
+
+    clueCards.forEach((card,index) => {
+
+      card.addEventListener("click",() => {
+
+        clueCards.forEach(other => {
+
+          other.classList.remove("active");
+
+        });
+
+
+        card.classList.add("active");
+
+
+        const clue =
+          clues[index];
+
+
+        clueDetail.classList.remove("glitch");
+
+        void clueDetail.offsetWidth;
+
+        clueDetail.classList.add("glitch");
+
+
+        clueDetail.innerHTML =
+          `<strong>${clue.title}:</strong> ${clue.text}`;
+
+      });
+
+    });
+
+
+    /* ============================================================
+       TV WORLD SIGNAL
+    ============================================================ */
+
+    const truthStates = [
+
+      {
+        word:"WHO?",
+        sub:"the answer is hidden",
+        message:
+          "SIGNAL 01 · SEARCHING FOR THE SUBJECT"
+      },
+
+      {
+        word:"MIGUEL.",
+        sub:"subject confirmed",
+        message:
+          "SIGNAL 02 · IDENTITY MATCH COMPLETE"
+      },
+
+      {
+        word:"♥",
+        sub:"truth signal detected",
+        message:
+          "SIGNAL 03 · EMOTIONAL DATA EXCEEDS LIMITS"
+      },
+
+      {
+        word:"YOU.",
+        sub:"truth waiting",
+        message:
+          "SIGNAL 04 · CASE CONCLUSION APPROACHING"
+      }
+
+    ];
+
+
+    let truthIndex = 0;
+
+
+    const truthWord =
+      document.getElementById("truthWord");
+
+    const truthSub =
+      document.getElementById("truthSub");
+
+    const tvWorldMessage =
+      document.getElementById("tvWorldMessage");
+
+
+    function rotateTruth() {
+
+      const state =
+        truthStates[truthIndex];
+
+
+      [truthWord,truthSub].forEach(
+        element => {
+
+          element.classList.remove("glitch");
+
+          void element.offsetWidth;
+
+          element.classList.add("glitch");
+
+        }
+      );
+
+
+      truthWord.textContent =
+        state.word;
+
+      truthSub.textContent =
+        state.sub;
+
+      tvWorldMessage.textContent =
+        state.message;
+
+
+      truthIndex =
+        (truthIndex + 1) %
+        truthStates.length;
+
+    }
+
+
+    setInterval(
+      rotateTruth,
+      2800
+    );
+
+
+
+    /* ============================================================
+       MEMORY TV / PHOTO — SIMPLE FILE PICKER
+    ============================================================ */
+
+    const memoryScreen =
+      document.getElementById("memoryScreen");
+
+    const memoryFileInput =
+      document.getElementById("memoryFileInput");
+
+    const memoryPhoto =
+      document.getElementById("memoryPhoto");
+
+    const memoryPlaceholder =
+      document.getElementById("memoryPlaceholder");
+
+    const memoryStatus =
+      document.getElementById("memoryStatus");
+
+    memoryScreen.addEventListener("click", event => {
+
+      if(event.target === memoryFileInput){
+        return;
+      }
+
+      memoryFileInput.click();
+
+    });
+
+    memoryFileInput.addEventListener("change", event => {
+
+      const file =
+        event.target.files && event.target.files[0];
+
+      if(!file){
+        return;
+      }
+
+      if(!file.type.startsWith("image/")){
+        memoryStatus.textContent = "INVALID IMAGE";
+        return;
+      }
+
+      const oldUrl =
+        memoryPhoto.dataset.objectUrl;
+
+      if(oldUrl){
+        URL.revokeObjectURL(oldUrl);
+      }
+
+      const imageUrl =
+        URL.createObjectURL(file);
+
+      memoryPhoto.dataset.objectUrl = imageUrl;
+      memoryPhoto.src = imageUrl;
+      memoryPhoto.classList.add("loaded");
+      memoryPlaceholder.classList.add("hidden");
+      memoryStatus.textContent = "ON AIR";
+
+      memoryScreen.classList.remove("glitching");
+      void memoryScreen.offsetWidth;
+      memoryScreen.classList.add("glitching");
+
+    });
+
+    memoryScreen.addEventListener("dragover", event => {
+      event.preventDefault();
+    });
+
+    memoryScreen.addEventListener("drop", event => {
+
+      event.preventDefault();
+
+      const file = event.dataTransfer?.files?.[0];
+
+      if(!file || !file.type.startsWith("image/")){
+        return;
+      }
+
+      const oldUrl =
+        memoryPhoto.dataset.objectUrl;
+
+      if(oldUrl){
+        URL.revokeObjectURL(oldUrl);
+      }
+
+      const imageUrl =
+        URL.createObjectURL(file);
+
+      memoryPhoto.dataset.objectUrl = imageUrl;
+      memoryPhoto.src = imageUrl;
+      memoryPhoto.classList.add("loaded");
+      memoryPlaceholder.classList.add("hidden");
+      memoryStatus.textContent = "ON AIR";
+
+    });
+
+    window.addEventListener("beforeunload", () => {
+      const objectUrl = memoryPhoto.dataset.objectUrl;
+      if(objectUrl){
+        URL.revokeObjectURL(objectUrl);
+      }
+    });
+
+    /* ============================================================
+       MUSIC
+    ============================================================ */
+
+    const music =
+      document.getElementById("pageMusic");
+
+    const musicButton =
+      document.getElementById("musicButton");
+
+
+    musicButton.addEventListener(
+      "click",
+      async () => {
+
+        if (music.paused) {
+
+          try {
+
+            await music.play();
+
+            musicButton.classList.add("playing");
+            musicButton.textContent = "Ⅱ";
+
+          } catch (error) {
+
+            musicButton.textContent = "×";
+
+            setTimeout(() => {
+              musicButton.textContent = "♪";
+            },1100);
+
+          }
+
+        } else {
+
+          music.pause();
+
+          musicButton.classList.remove("playing");
+          musicButton.textContent = "♪";
+
+        }
+
+      }
+    );
+
+
+    /* ============================================================
+       TV PARALLAX
+    ============================================================ */
+
+    const tvSet =
+      document.getElementById("tvSet");
+
+
+    window.addEventListener(
+      "mousemove",
+      event => {
+
+        if (window.innerWidth < 900) {
+          return;
+        }
+
+        const x =
+          event.clientX / window.innerWidth - 0.5;
+
+        const y =
+          event.clientY / window.innerHeight - 0.5;
+
+        tvSet.style.transform =
+          `rotate(${x * 2}deg) translate(${x * 4}px,${y * 4}px)`;
+
+      }
+    );
+
+
+    /* ============================================================
+       INITIAL STATE
+    ============================================================ */
+
+    showChannel(0);
+
+  </script>
+
+</body>
+</html>

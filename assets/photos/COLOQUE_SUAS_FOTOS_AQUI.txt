@@ -1,0 +1,1 @@
+Os quadros de foto já estão no layout. Use este diretório para organizar os arquivos que quiser inserir no HTML/CSS.

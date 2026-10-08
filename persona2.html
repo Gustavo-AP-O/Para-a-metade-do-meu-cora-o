@@ -1,0 +1,3329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="foto.aba.png">
+
+    <title>P2 — The Story Has Two Sides</title>
+
+    <meta
+        name="description"
+        content="Luciele + Miguel — The Story Has Two Sides."
+    >
+
+    <style>
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            background:
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(255, 30, 76, 0.12),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 85% 35%,
+                    rgba(255, 115, 145, 0.08),
+                    transparent 25%
+                ),
+                linear-gradient(
+                    135deg,
+                    #050306 0%,
+                    #10070e 50%,
+                    #070408 100%
+                );
+            color: #fff;
+            font-family:
+                "Segoe UI",
+                Inter,
+                Arial,
+                sans-serif;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+            z-index: 999;
+
+            opacity: 0.045;
+
+            background:
+                linear-gradient(
+                    rgba(255,255,255,0.2) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.2) 1px,
+                    transparent 1px
+                );
+
+            background-size: 4px 4px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           TRANSIÇÃO
+        ========================================================= */
+
+        .page-transition {
+            position: fixed;
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(255, 36, 79, 0.25),
+                    transparent 25%
+                ),
+                #060307;
+
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: bottom;
+
+            pointer-events: none;
+
+            z-index: 1000;
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.35s ease;
+        }
+
+        body.leaving .page-transition {
+            opacity: 1;
+            transform: scaleY(1);
+            pointer-events: all;
+        }
+
+        /* =========================================================
+           VARIÁVEIS
+        ========================================================= */
+
+        :root {
+            --bg: #070408;
+            --bg2: #12070e;
+
+            --red: #ff2752;
+            --red2: #ff5c79;
+
+            --pink: #ff9db2;
+            --pink-light: #ffd6df;
+
+            --white: #fff8fa;
+
+            --muted: #ad9ca4;
+            --muted2: #836f78;
+
+            --line: rgba(255, 65, 100, 0.22);
+            --line-strong: rgba(255, 92, 120, 0.58);
+        }
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .topbar {
+            width: min(1180px, calc(100% - 32px));
+
+            margin: 16px auto 0;
+
+            padding: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+
+            border: 1px solid var(--line);
+
+            border-radius: 18px;
+
+            background:
+                rgba(7, 4, 8, 0.82);
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 15px 45px rgba(0, 0, 0, 0.3);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid var(--line-strong);
+
+            border-radius: 12px;
+
+            color: var(--pink);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 39, 82, 0.16),
+                    rgba(255,255,255,0.02)
+                );
+
+            font-weight: 900;
+            letter-spacing: -1px;
+
+            box-shadow:
+                inset 0 0 25px rgba(255, 39, 82, 0.05);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-text strong {
+            font-size: 0.78rem;
+            letter-spacing: 0.13em;
+        }
+
+        .brand-text span {
+            color: var(--muted);
+            font-size: 0.64rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            position: relative;
+
+            padding: 9px 11px;
+
+            border-radius: 9px;
+
+            color: #a8949d;
+
+            font-size: 0.7rem;
+            font-weight: 800;
+
+            letter-spacing: 0.13em;
+
+            transition: 0.2s;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            color: #fff;
+            background: rgba(255, 39, 82, 0.1);
+        }
+
+        .nav a.active::after {
+            content: "";
+
+            position: absolute;
+
+            left: 10px;
+            right: 10px;
+            bottom: 4px;
+
+            height: 2px;
+
+            border-radius: 20px;
+
+            background: var(--red);
+
+            box-shadow:
+                0 0 12px rgba(255, 39, 82, 0.7);
+        }
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        main {
+            width: min(1180px, calc(100% - 32px));
+            margin: auto;
+        }
+
+        section {
+            padding: 110px 0;
+            position: relative;
+        }
+
+        /* =========================================================
+           TEXTOS GERAIS
+        ========================================================= */
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            color: var(--pink);
+
+            font-size: 0.7rem;
+            font-weight: 900;
+
+            letter-spacing: 0.18em;
+
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+
+            width: 35px;
+            height: 1px;
+
+            background: var(--red);
+
+            box-shadow:
+                0 0 12px rgba(255, 39, 82, 0.7);
+        }
+
+        .section-index {
+            color: var(--pink);
+
+            font-size: 0.68rem;
+            font-weight: 900;
+
+            letter-spacing: 0.18em;
+
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            margin-top: 14px;
+
+            max-width: 760px;
+
+            font-size:
+                clamp(2.5rem, 5vw, 5rem);
+
+            line-height: 0.95;
+
+            letter-spacing: -0.055em;
+
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 span {
+            color: var(--red);
+        }
+
+        .section-heading p {
+            max-width: 690px;
+
+            margin-top: 18px;
+
+            color: var(--muted);
+
+            font-size: 0.98rem;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            min-height: 90vh;
+
+            display: grid;
+            align-items: center;
+
+            padding-top: 80px;
+        }
+
+        .hero-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.05fr
+                0.95fr;
+
+            gap: 50px;
+
+            align-items: center;
+        }
+
+        .hero h1 {
+            margin-top: 20px;
+
+            font-size:
+                clamp(3.5rem, 9vw, 8rem);
+
+            line-height: 0.84;
+
+            letter-spacing: -0.065em;
+
+            text-transform: uppercase;
+        }
+
+        .hero h1 span {
+            display: block;
+
+            color: var(--red);
+
+            text-shadow:
+                0 0 25px rgba(255, 39, 82, 0.18);
+        }
+
+        .hero-description {
+            max-width: 650px;
+
+            margin-top: 26px;
+
+            color: #cdbbc3;
+
+            font-size:
+                clamp(1rem, 2vw, 1.2rem);
+
+            line-height: 1.7;
+        }
+
+        .hero-description strong {
+            color: #fff;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 46px;
+
+            padding: 0 18px;
+
+            border-radius: 11px;
+
+            border: 1px solid var(--line-strong);
+
+            font-size: 0.72rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.12em;
+
+            text-transform: uppercase;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+
+            border-color: var(--pink);
+        }
+
+        .btn-primary {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff2752,
+                    #9d0c2e
+                );
+
+            box-shadow:
+                0 15px 35px rgba(255, 39, 82, 0.18);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.02);
+            color: #decbd2;
+        }
+
+        /* =========================================================
+           HERO ART
+        ========================================================= */
+
+        .hero-art {
+            min-height: 560px;
+
+            display: grid;
+            place-items: center;
+
+            position: relative;
+        }
+
+        .split-art {
+            width: min(520px, 100%);
+
+            aspect-ratio: 0.88;
+
+            position: relative;
+
+            border: 1px solid var(--line);
+
+            border-radius: 26px;
+
+            overflow: hidden;
+
+            background: #09050a;
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,0.45);
+
+            transform: rotate(1.3deg);
+
+            transition:
+                transform 0.25s ease;
+        }
+
+        .split-art:hover {
+            transform:
+                rotate(0deg)
+                translateY(-5px);
+        }
+
+        .split-art::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255,39,82,0.12),
+                    transparent 45%,
+                    rgba(255,157,178,0.08)
+                );
+
+            z-index: 3;
+
+            pointer-events: none;
+        }
+
+        .art-side {
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+
+            width: 50%;
+
+            padding: 34px;
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: space-between;
+        }
+
+        .art-side.left {
+            left: 0;
+
+            background:
+                radial-gradient(
+                    circle at 40% 25%,
+                    rgba(255,39,82,0.18),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    145deg,
+                    #2b0716,
+                    #080408
+                );
+        }
+
+        .art-side.right {
+            right: 0;
+
+            background:
+                radial-gradient(
+                    circle at 55% 28%,
+                    rgba(255,171,190,0.12),
+                    transparent 34%
+                ),
+                linear-gradient(
+                    200deg,
+                    #1c0d19,
+                    #080408
+                );
+        }
+
+        .art-small {
+            color: var(--pink);
+
+            font-size: 0.62rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.18em;
+
+            text-transform: uppercase;
+        }
+
+        .art-word {
+            font-size:
+                clamp(2rem, 4vw, 4rem);
+
+            font-weight: 950;
+
+            line-height: 0.9;
+
+            letter-spacing: -0.06em;
+
+            text-transform: uppercase;
+        }
+
+        .art-quote {
+            color: #bba8b1;
+
+            font-size: 0.82rem;
+
+            line-height: 1.6;
+        }
+
+        .art-divider {
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+
+            left: 50%;
+
+            width: 2px;
+
+            transform: translateX(-50%);
+
+            background:
+                linear-gradient(
+                    transparent,
+                    var(--red),
+                    transparent
+                );
+
+            box-shadow:
+                0 0 25px rgba(255,39,82,0.5);
+
+            z-index: 10;
+        }
+
+        .art-stamp {
+            position: absolute;
+
+            left: 50%;
+            bottom: 28px;
+
+            transform: translateX(-50%);
+
+            z-index: 20;
+
+            padding: 8px 12px;
+
+            border: 1px solid var(--line-strong);
+
+            border-radius: 50px;
+
+            background: #0b060a;
+
+            color: var(--pink);
+
+            white-space: nowrap;
+
+            font-size: 0.6rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.12em;
+        }
+
+        .scanline {
+            position: absolute;
+
+            z-index: 15;
+
+            left: 0;
+            right: 0;
+
+            height: 1px;
+
+            background:
+                rgba(255, 180, 200, 0.4);
+
+            animation:
+                scan 5s linear infinite;
+        }
+
+        @keyframes scan {
+            from {
+                top: 5%;
+            }
+
+            to {
+                top: 96%;
+            }
+        }
+
+        /* =========================================================
+           RUMOR BOARD
+        ========================================================= */
+
+        .rumor-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            gap: 30px;
+
+            margin-bottom: 30px;
+        }
+
+        .counter {
+            text-align: right;
+
+            color: var(--muted);
+
+            font-size: 0.65rem;
+
+            font-weight: 800;
+
+            letter-spacing: 0.14em;
+
+            text-transform: uppercase;
+        }
+
+        .counter strong {
+            display: block;
+
+            margin-top: 4px;
+
+            color: var(--pink);
+
+            font-size: 1.5rem;
+        }
+
+        .rumor-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+        }
+
+        .rumor-card {
+            min-height: 260px;
+
+            position: relative;
+
+            padding: 24px;
+
+            border: 1px solid var(--line);
+
+            border-radius: 17px;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    150deg,
+                    rgba(255,39,82,0.09),
+                    rgba(255,255,255,0.015)
+                );
+
+            box-shadow:
+                0 25px 60px rgba(0,0,0,0.24);
+
+            transition:
+                0.25s ease;
+
+            cursor: pointer;
+        }
+
+        .rumor-card:nth-child(2) {
+            transform: rotate(-1deg);
+        }
+
+        .rumor-card:nth-child(3) {
+            transform: rotate(1deg);
+        }
+
+        .rumor-card:hover,
+        .rumor-card.selected {
+            transform:
+                translateY(-7px)
+                rotate(0deg);
+
+            border-color:
+                var(--line-strong);
+
+            background:
+                linear-gradient(
+                    150deg,
+                    rgba(255,39,82,0.14),
+                    rgba(255,255,255,0.02)
+                );
+        }
+
+        .pin {
+            width: 10px;
+            height: 10px;
+
+            margin-bottom: 25px;
+
+            border-radius: 50%;
+
+            background: var(--red);
+
+            box-shadow:
+                0 0 15px rgba(255,39,82,0.75);
+        }
+
+        .rumor-card small {
+            color: var(--pink);
+
+            font-size: 0.61rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.15em;
+
+            text-transform: uppercase;
+        }
+
+        .rumor-card h3 {
+            margin-top: 12px;
+
+            font-size: 1.3rem;
+
+            line-height: 1;
+
+            text-transform: uppercase;
+        }
+
+        .rumor-card p {
+            margin-top: 17px;
+
+            color: #baa8b0;
+
+            font-size: 0.85rem;
+        }
+
+        .click-label {
+            position: absolute;
+
+            left: 24px;
+            bottom: 18px;
+
+            color: var(--pink);
+
+            font-size: 0.6rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.12em;
+
+            text-transform: uppercase;
+        }
+
+        .evidence {
+            margin-top: 20px;
+
+            padding: 22px 24px;
+
+            border-left:
+                3px solid var(--red);
+
+            border-radius:
+                0 13px 13px 0;
+
+            background:
+                rgba(255,39,82,0.045);
+
+            border-top:
+                1px solid rgba(255,39,82,0.08);
+
+            border-bottom:
+                1px solid rgba(255,39,82,0.08);
+
+            border-right:
+                1px solid rgba(255,39,82,0.08);
+        }
+
+        .evidence small {
+            color: var(--pink);
+
+            font-size: 0.61rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.15em;
+        }
+
+        .evidence p {
+            margin-top: 8px;
+
+            color: #decdd3;
+
+            font-size: 0.92rem;
+        }
+
+        .evidence strong {
+            color: #fff;
+        }
+
+        /* =========================================================
+           DOUBLE READ
+        ========================================================= */
+
+        .memory-container {
+            margin-top: 35px;
+
+            padding: 18px;
+
+            border: 1px solid var(--line);
+
+            border-radius: 22px;
+
+            background:
+                rgba(8, 5, 9, 0.78);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.3);
+        }
+
+        .memory-tabs {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-bottom: 18px;
+        }
+
+        .memory-tab {
+            padding: 10px 12px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,0.02);
+
+            color: #aa969f;
+
+            font-size: 0.62rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.12em;
+
+            transition: 0.2s;
+        }
+
+        .memory-tab:hover,
+        .memory-tab.active {
+            color: #fff;
+
+            background:
+                rgba(255,39,82,0.11);
+
+            border-color:
+                var(--line-strong);
+        }
+
+        .memory-compare {
+            position: relative;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            min-height: 420px;
+
+            overflow: hidden;
+
+            border-radius: 16px;
+
+            border:
+                1px solid rgba(255,255,255,0.04);
+        }
+
+        .memory-side {
+            padding: 32px;
+
+            position: relative;
+        }
+
+        .memory-side.left {
+            background:
+                linear-gradient(
+                    140deg,
+                    rgba(255,39,82,0.12),
+                    transparent 60%
+                ),
+                #12070e;
+        }
+
+        .memory-side.right {
+            background:
+                linear-gradient(
+                    220deg,
+                    rgba(255,170,190,0.08),
+                    transparent 60%
+                ),
+                #100910;
+        }
+
+        .memory-side::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 15px;
+
+            border:
+                1px dashed
+                rgba(255,157,178,0.12);
+
+            pointer-events: none;
+        }
+
+        .memory-label {
+            position: relative;
+            z-index: 2;
+
+            color: var(--pink);
+
+            font-size: 0.62rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.17em;
+
+            text-transform: uppercase;
+        }
+
+        .memory-side h3 {
+            position: relative;
+            z-index: 2;
+
+            margin-top: 15px;
+
+            font-size:
+                clamp(1.8rem, 3.8vw, 3.3rem);
+
+            line-height: 0.95;
+
+            letter-spacing: -0.05em;
+
+            text-transform: uppercase;
+        }
+
+        .memory-side p {
+            position: relative;
+            z-index: 2;
+
+            max-width: 450px;
+
+            margin-top: 18px;
+
+            color: #c2b0b8;
+
+            font-size: 0.89rem;
+        }
+
+        .memory-quote {
+            position: relative;
+            z-index: 2;
+
+            margin-top: 24px;
+
+            padding-left: 14px;
+
+            border-left: 2px solid var(--red);
+
+            color: #f0dde3;
+
+            font-style: italic;
+        }
+
+        .memory-divider {
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+
+            left: 50%;
+
+            width: 3px;
+
+            transform: translateX(-50%);
+
+            background:
+                linear-gradient(
+                    transparent,
+                    var(--red),
+                    transparent
+                );
+
+            box-shadow:
+                0 0 25px rgba(255,39,82,0.55);
+
+            z-index: 4;
+
+            pointer-events: none;
+
+            transition:
+                left 0.12s linear;
+        }
+
+        .slider-area {
+            margin-top: 16px;
+
+            display: grid;
+
+            grid-template-columns:
+                auto
+                1fr
+                auto;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 15px 18px;
+
+            border: 1px solid var(--line);
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,0.02);
+        }
+
+        .slider-area span,
+        .slider-area output {
+            color: var(--muted);
+
+            font-size: 0.62rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.12em;
+
+            text-transform: uppercase;
+        }
+
+        .slider-area output {
+            color: var(--pink);
+        }
+
+        #memoryRange {
+            width: 100%;
+            accent-color: var(--red);
+        }
+
+        .memory-status {
+            margin-top: 13px;
+
+            text-align: center;
+
+            color: #c9b8bf;
+
+            font-size: 0.76rem;
+        }
+
+        .memory-note {
+            margin-top: 13px;
+
+            padding: 15px 17px;
+
+            border: 1px solid var(--line);
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,39,82,0.03);
+
+            color: #a9919b;
+
+            font-size: 0.8rem;
+
+            text-align: center;
+        }
+
+        /* =========================================================
+           TWO SIDES
+        ========================================================= */
+
+        .sides {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+
+            margin-top: 35px;
+        }
+
+        .side-card {
+            min-height: 400px;
+
+            position: relative;
+
+            padding: 34px;
+
+            overflow: hidden;
+
+            border: 1px solid var(--line);
+
+            border-radius: 21px;
+
+            background:
+                radial-gradient(
+                    circle at 80% 10%,
+                    rgba(255,39,82,0.14),
+                    transparent 28%
+                ),
+                #10070d;
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,0.25);
+        }
+
+        .side-card.alt {
+            background:
+                radial-gradient(
+                    circle at 20% 10%,
+                    rgba(255,174,194,0.10),
+                    transparent 28%
+                ),
+                #0e090f;
+        }
+
+        .side-tag {
+            color: var(--pink);
+
+            font-size: 0.62rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.17em;
+
+            text-transform: uppercase;
+        }
+
+        .side-card h3 {
+            margin-top: 15px;
+
+            font-size:
+                clamp(2rem, 4vw, 3.7rem);
+
+            line-height: 0.92;
+
+            letter-spacing: -0.05em;
+
+            text-transform: uppercase;
+        }
+
+        .side-card > p {
+            margin-top: 20px;
+
+            color: #bba9b1;
+
+            max-width: 500px;
+        }
+
+        .side-points {
+            display: grid;
+
+            gap: 11px;
+
+            margin-top: 23px;
+        }
+
+        .side-point {
+            display: grid;
+
+            grid-template-columns:
+                24px
+                1fr;
+
+            gap: 8px;
+
+            color: #ded0d6;
+
+            font-size: 0.82rem;
+        }
+
+        .side-point span {
+            color: var(--red);
+
+            font-weight: 900;
+        }
+
+        .side-stamp {
+            position: absolute;
+
+            top: 22px;
+            right: 22px;
+
+            padding: 6px 8px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 7px;
+
+            color: var(--muted2);
+
+            font-size: 0.56rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.12em;
+        }
+
+        /* =========================================================
+           MENSAGENS
+        ========================================================= */
+
+        .messages {
+            display: grid;
+
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .message {
+            border:
+                1px solid var(--line);
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,0.015);
+
+            overflow: hidden;
+
+            transition:
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .message:hover,
+        .message.open {
+            border-color:
+                var(--line-strong);
+
+            background:
+                rgba(255,39,82,0.045);
+        }
+
+        .message-header {
+            padding: 17px 19px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            cursor: pointer;
+        }
+
+        .message-header strong {
+            font-size: 0.82rem;
+
+            letter-spacing: 0.03em;
+        }
+
+        .message-header span {
+            color: var(--muted2);
+
+            font-size: 0.58rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.12em;
+
+            text-transform: uppercase;
+        }
+
+        .message-content {
+            max-height: 0;
+
+            overflow: hidden;
+
+            opacity: 0;
+
+            transition:
+                max-height 0.35s ease,
+                opacity 0.25s ease;
+        }
+
+        .message.open .message-content {
+            max-height: 200px;
+
+            opacity: 1;
+        }
+
+        .message-content p {
+            padding: 0 19px 19px;
+
+            color: #c4b3ba;
+
+            font-size: 0.84rem;
+
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           FINAL
+        ========================================================= */
+
+        .final {
+            padding-bottom: 120px;
+        }
+
+        .final-box {
+            margin-top: 30px;
+
+            padding: 45px 30px;
+
+            text-align: center;
+
+            border:
+                1px solid var(--line-strong);
+
+            border-radius: 22px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(255,39,82,0.13),
+                    transparent 50%
+                ),
+                #0b0509;
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,0.35);
+        }
+
+        .final-box small {
+            color: var(--pink);
+
+            font-size: 0.6rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.18em;
+        }
+
+        .final-box h3 {
+            margin-top: 16px;
+
+            font-size:
+                clamp(2.3rem, 6vw, 5rem);
+
+            line-height: 0.92;
+
+            letter-spacing: -0.06em;
+
+            text-transform: uppercase;
+        }
+
+        .final-box h3 span {
+            color: var(--red);
+        }
+
+        .final-box p {
+            max-width: 730px;
+
+            margin: 20px auto 0;
+
+            color: #c3b0b8;
+
+            line-height: 1.8;
+        }
+
+        .seal {
+            width: 82px;
+            height: 82px;
+
+            margin:
+                28px
+                auto
+                0;
+
+            display: grid;
+            place-items: center;
+
+            border:
+                1px solid var(--line-strong);
+
+            border-radius: 50%;
+
+            color: var(--pink);
+
+            font-weight: 900;
+
+            animation:
+                sealPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes sealPulse {
+            0%,
+            100% {
+                transform: scale(1);
+
+                box-shadow:
+                    0 0 20px rgba(255,39,82,0.1);
+            }
+
+            50% {
+                transform: scale(1.05);
+
+                box-shadow:
+                    0 0 40px rgba(255,39,82,0.26);
+            }
+        }
+
+        .chapter-buttons {
+            margin-top: 16px;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+        }
+
+        .chapter-btn {
+            min-height: 72px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 15px 17px;
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,0.015);
+
+            transition: 0.2s;
+        }
+
+        .chapter-btn:hover {
+            border-color:
+                var(--line-strong);
+
+            transform:
+                translateY(-2px);
+        }
+
+        .chapter-btn small {
+            display: block;
+
+            color: var(--muted2);
+
+            font-size: 0.57rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.13em;
+        }
+
+        .chapter-btn strong {
+            display: block;
+
+            margin-top: 3px;
+
+            font-size: 0.9rem;
+
+            text-transform: uppercase;
+        }
+
+        .chapter-number {
+            color: var(--pink);
+
+            font-size: 0.85rem;
+
+            font-weight: 900;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            padding:
+                30px
+                20px
+                45px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.05);
+
+            text-align: center;
+
+            color: #76656d;
+
+            font-size: 0.62rem;
+
+            font-weight: 700;
+
+            letter-spacing: 0.13em;
+
+            text-transform: uppercase;
+        }
+
+        /* =========================================================
+           REVEAL
+        ========================================================= */
+
+        .reveal {
+            opacity: 0;
+
+            transform:
+                translateY(26px);
+
+            transition:
+                opacity 0.75s ease,
+                transform 0.75s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+        .glitch {
+            animation:
+                glitchText 0.25s steps(2, end);
+        }
+
+        @keyframes glitchText {
+            0% {
+                transform: translateX(0);
+                filter: none;
+            }
+
+            25% {
+                transform: translateX(-3px);
+                filter:
+                    drop-shadow(
+                        3px 0 rgba(255,39,82,0.7)
+                    );
+            }
+
+            50% {
+                transform: translateX(3px);
+                filter:
+                    drop-shadow(
+                        -3px 0 rgba(255,179,195,0.5)
+                    );
+            }
+
+            75% {
+                transform: translateX(-1px);
+            }
+
+            100% {
+                transform: translateX(0);
+                filter: none;
+            }
+        }
+
+        /* =========================================================
+           RESPONSIVO
+        ========================================================= */
+
+        @media (max-width: 950px) {
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-art {
+                min-height: 430px;
+            }
+
+            .rumor-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .sides {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 680px) {
+
+            .topbar {
+                width:
+                    calc(100% - 16px);
+
+                top: 8px;
+
+                margin-top: 8px;
+            }
+
+            .brand-text {
+                display: none;
+            }
+
+            .nav {
+                justify-content: flex-end;
+            }
+
+            .nav a {
+                padding:
+                    7px 7px;
+
+                font-size:
+                    0.6rem;
+            }
+
+            main {
+                width:
+                    calc(100% - 20px);
+            }
+
+            section {
+                padding:
+                    80px 0;
+            }
+
+            .hero {
+                padding-top:
+                    65px;
+            }
+
+            .hero h1 {
+                font-size:
+                    clamp(3rem, 17vw, 5.3rem);
+            }
+
+            .hero-art {
+                min-height:
+                    350px;
+            }
+
+            .split-art {
+                transform: none;
+            }
+
+            .rumor-top {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .counter {
+                text-align: left;
+            }
+
+            .rumor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .memory-compare {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .memory-side {
+                min-height:
+                    290px;
+            }
+
+            .memory-divider {
+                top: 50%;
+                bottom: auto;
+
+                left: 0;
+
+                width: 100%;
+                height: 3px;
+
+                transform:
+                    translateY(-50%);
+            }
+
+            .slider-area {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .slider-area output {
+                text-align: left;
+            }
+
+            .chapter-buttons {
+                grid-template-columns:
+                    1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         TRANSIÇÃO
+    ========================================================= -->
+
+    <div class="page-transition"></div>
+
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================= -->
+
+    <header class="topbar">
+
+        <a
+            href="index.html"
+            class="brand page-link"
+        >
+            <div class="brand-mark">
+                L×M
+            </div>
+
+            <div class="brand-text">
+                <strong>
+                    LUCIELE + MIGUEL
+                </strong>
+
+                <span>
+                    chapter 02 · perception
+                </span>
+            </div>
+        </a>
+
+
+        <nav class="nav">
+
+            <a
+                href="index.html"
+                class="page-link"
+            >
+                INÍCIO
+            </a>
+
+            <a
+                href="persona1.html"
+                class="page-link"
+            >
+                P1
+            </a>
+
+            <a
+                href="persona2.html"
+                class="page-link active"
+            >
+                P2
+            </a>
+
+            <a
+                href="persona3.html"
+                class="page-link"
+            >
+                P3
+            </a>
+
+            <a
+                href="persona4.html"
+                class="page-link"
+            >
+                P4
+            </a>
+
+            <a
+                href="persona5.html"
+                class="page-link"
+            >
+                P5
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-grid">
+
+                <div class="reveal">
+
+                    <div class="eyebrow">
+                        P2 · PERCEPTION / RECORD 02
+                    </div>
+
+
+                    <h1>
+                        THE STORY
+                        <span>
+                            HAS TWO SIDES.
+                        </span>
+                    </h1>
+
+
+                    <p class="hero-description">
+
+                        A mesma lembrança pode ganhar
+                        duas leituras.
+
+                        <strong>
+                            O que muda não é o momento.
+                        </strong>
+
+                        É quem está olhando para ele.
+
+                    </p>
+
+
+                    <div class="hero-buttons">
+
+                        <a
+                            href="#rumor-board"
+                            class="btn btn-primary"
+                        >
+                            ABRIR O MURAL →
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ARTE DIVIDIDA -->
+
+                <div class="hero-art reveal">
+
+                    <div class="split-art">
+
+                        <div class="scanline"></div>
+
+                        <div class="art-side left">
+
+                            <div>
+                                <div class="art-small">
+                                    SIDE A
+                                </div>
+
+                                <div class="art-word">
+                                    INNOCENT
+                                    <br>
+                                    SIN
+                                </div>
+                            </div>
+
+                            <div class="art-quote">
+                                “Talvez tenha sido
+                                só um detalhe.”
+                            </div>
+
+                        </div>
+
+
+                        <div class="art-side right">
+
+                            <div>
+                                <div class="art-small">
+                                    SIDE B
+                                </div>
+
+                                <div class="art-word">
+                                    ETERNAL
+                                    <br>
+                                    PUNISHMENT
+                                </div>
+                            </div>
+
+                            <div class="art-quote">
+                                “Ou talvez aquele
+                                detalhe tenha
+                                significado tudo.”
+                            </div>
+
+                        </div>
+
+
+                        <div class="art-divider"></div>
+
+
+                        <div class="art-stamp">
+                            EVIDENCE / 02
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             RUMOR BOARD
+        ====================================================== -->
+
+        <section id="rumor-board">
+
+            <div class="rumor-top reveal">
+
+                <div class="section-heading">
+
+                    <div class="section-index">
+                        01 / RUMOR BOARD
+                    </div>
+
+                    <h2>
+                        DISSERAM QUE.
+                        <br>
+
+                        <span>
+                            MAS QUEM DISSE?
+                        </span>
+                    </h2>
+
+                    <p>
+                        Algumas histórias chegam primeiro
+                        como rumor.
+
+                        Clique nos registros para descobrir
+                        o que foi encontrado no arquivo.
+                    </p>
+
+                </div>
+
+
+                <div class="counter">
+
+                    REGISTROS ABERTOS
+
+                    <strong>
+                        <span id="openedCount">
+                            0
+                        </span>
+                        / 4
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="rumor-grid">
+
+                <article
+                    class="rumor-card reveal"
+                    data-rumor="0"
+                >
+
+                    <div class="pin"></div>
+
+                    <small>
+                        REGISTRO 01
+                    </small>
+
+                    <h3>
+                        DISSERAM QUE...
+                    </h3>
+
+                    <p>
+                        “Foi só uma conversa.
+                        Nada demais.”
+                    </p>
+
+                    <div class="click-label">
+                        clique para confrontar
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="rumor-card reveal"
+                    data-rumor="1"
+                >
+
+                    <div class="pin"></div>
+
+                    <small>
+                        REGISTRO 02
+                    </small>
+
+                    <h3>
+                        OUVI FALAR...
+                    </h3>
+
+                    <p>
+                        “Alguém percebeu
+                        antes dos dois.”
+                    </p>
+
+                    <div class="click-label">
+                        clique para investigar
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="rumor-card reveal"
+                    data-rumor="2"
+                >
+
+                    <div class="pin"></div>
+
+                    <small>
+                        REGISTRO 03
+                    </small>
+
+                    <h3>
+                        A VERDADE...
+                    </h3>
+
+                    <p>
+                        “Talvez a verdade
+                        nunca tenha sido tão complicada.”
+                    </p>
+
+                    <div class="click-label">
+                        clique para abrir
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="rumor-card reveal"
+                    data-rumor="3"
+                >
+
+                    <div class="pin"></div>
+
+                    <small>
+                        REGISTRO 04
+                    </small>
+
+                    <h3>
+                        REGISTRO FINAL...
+                    </h3>
+
+                    <p>
+                        “Duas pessoas lembram.
+                        As duas estão certas.”
+                    </p>
+
+                    <div class="click-label">
+                        clique para concluir
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="evidence reveal">
+
+                <small id="evidenceTitle">
+                    ARQUIVO AGUARDANDO LEITURA
+                </small>
+
+                <p id="evidenceText">
+                    Selecione um registro acima.
+                    A mensagem encontrada aparecerá aqui.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DOUBLE READ
+        ====================================================== -->
+
+        <section id="double-read">
+
+            <div class="section-heading reveal">
+
+                <div class="section-index">
+                    02 / THE DOUBLE READ
+                </div>
+
+                <h2>
+                    A MESMA MEMÓRIA.
+                    <br>
+
+                    <span>
+                        DUAS VERSÕES.
+                    </span>
+                </h2>
+
+                <p>
+                    Aqui não existe resposta certa.
+
+                    Mova o marcador para aproximar
+                    uma versão da outra e veja como
+                    a leitura muda enquanto o momento
+                    continua sendo o mesmo.
+                </p>
+
+            </div>
+
+
+            <div class="memory-container reveal">
+
+
+                <!-- ABAS -->
+
+                <div class="memory-tabs">
+
+                    <button
+                        class="memory-tab active"
+                        data-memory="0"
+                    >
+                        01 / OLHAR
+                    </button>
+
+                    <button
+                        class="memory-tab"
+                        data-memory="1"
+                    >
+                        02 / SILÊNCIO
+                    </button>
+
+                    <button
+                        class="memory-tab"
+                        data-memory="2"
+                    >
+                        03 / RISO
+                    </button>
+
+                    <button
+                        class="memory-tab"
+                        data-memory="3"
+                    >
+                        04 / ESCOLHA
+                    </button>
+
+                </div>
+
+
+                <!-- COMPARADOR -->
+
+                <div class="memory-compare">
+
+
+                    <!-- LUCIELE -->
+
+                    <article class="memory-side left">
+
+                        <div class="memory-label">
+                            SIDE A · LUCIELE
+                        </div>
+
+                        <h3 id="leftTitle">
+                            FOI NAQUELE MOMENTO.
+                        </h3>
+
+                        <p id="leftText">
+                            Eu lembro da sensação antes
+                            de lembrar das palavras.
+
+                            Tinha alguma coisa diferente ali,
+                            mesmo que ninguém tivesse colocado
+                            nome nela.
+                        </p>
+
+                        <p
+                            class="memory-quote"
+                            id="leftQuote"
+                        >
+                            “Eu percebi antes
+                            de entender.”
+                        </p>
+
+                    </article>
+
+
+                    <!-- MIGUEL -->
+
+                    <article class="memory-side right">
+
+                        <div class="memory-label">
+                            SIDE B · MIGUEL
+                        </div>
+
+                        <h3 id="rightTitle">
+                            TALVEZ EU SÓ ESTIVESSE VIVENDO.
+                        </h3>
+
+                        <p id="rightText">
+                            Do outro lado, a mesma cena
+                            parecia mais simples.
+
+                            Era só um momento bom,
+                            daqueles que a gente não sabe
+                            que vai guardar.
+                        </p>
+
+                        <p
+                            class="memory-quote"
+                            id="rightQuote"
+                        >
+                            “Eu só sabia
+                            que estava feliz.”
+                        </p>
+
+                    </article>
+
+
+                    <!-- DIVISOR -->
+
+                    <div
+                        class="memory-divider"
+                        id="memoryDivider"
+                    ></div>
+
+                </div>
+
+
+                <!-- SLIDER -->
+
+                <div class="slider-area">
+
+                    <span>
+                        LUCIELE
+                    </span>
+
+                    <input
+                        type="range"
+                        id="memoryRange"
+                        min="0"
+                        max="100"
+                        value="50"
+                    >
+
+                    <output id="rangeValue">
+                        50%
+                    </output>
+
+                </div>
+
+
+                <div
+                    class="memory-status"
+                    id="memoryStatus"
+                >
+                    50% de uma leitura ·
+                    50% da outra ·
+                    100% do mesmo momento.
+                </div>
+
+
+                <div class="memory-note">
+                    A graça desta página é justamente essa:
+                    nenhuma das duas versões apaga a outra.
+
+                    Elas só mostram como uma memória
+                    pode ficar diferente dependendo
+                    de quem a guarda.
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             MENSAGENS
+        ====================================================== -->
+
+        <section>
+
+            <div class="section-heading reveal">
+
+                <div class="section-index">
+                    04 / DISCOVERED MESSAGES
+                </div>
+
+                <h2>
+                    ALGUMAS COISAS
+                    <br>
+
+                    <span>
+                        APARECEM DEPOIS.
+                    </span>
+                </h2>
+
+                <p>
+                    Abra os registros.
+
+                    Eles parecem pequenos,
+                    mas foram colocados aqui
+                    para serem descobertos aos poucos.
+                </p>
+
+            </div>
+
+
+            <div class="messages">
+
+
+                <article class="message reveal">
+
+                    <div class="message-header">
+
+                        <strong>
+                            MSG_02A —
+                            NÃO FOI COINCIDÊNCIA
+                        </strong>
+
+                        <span>
+                            abrir arquivo
+                        </span>
+
+                    </div>
+
+                    <div class="message-content">
+
+                        <p>
+                            Tem momentos que só parecem aleatórios
+                            até você olhar para trás.
+
+                            Depois que você sabe onde a história
+                            foi parar, certas coisas começam
+                            a fazer sentido.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="message reveal">
+
+                    <div class="message-header">
+
+                        <strong>
+                            MSG_02B —
+                            REGISTRO RECUPERADO
+                        </strong>
+
+                        <span>
+                            abrir arquivo
+                        </span>
+
+                    </div>
+
+                    <div class="message-content">
+
+                        <p>
+                            Nem toda lembrança precisa de uma fotografia.
+
+                            Algumas ficam registradas do jeito
+                            mais estranho:
+
+                            na sensação que volta do nada.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="message reveal">
+
+                    <div class="message-header">
+
+                        <strong>
+                            MSG_02C —
+                            SEM REMETENTE
+                        </strong>
+
+                        <span>
+                            abrir arquivo
+                        </span>
+
+                    </div>
+
+                    <div class="message-content">
+
+                        <p>
+                            “Você não precisa lembrar
+                            exatamente como aconteceu.
+
+                            Basta lembrar por que
+                            aquele momento ficou.”
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FINAL
+        ====================================================== -->
+
+        <section class="final">
+
+            <div class="section-heading reveal">
+
+                <div class="section-index">
+                    05 / FINAL RECORD
+                </div>
+
+                <h2>
+                    NO FIM, AS DUAS VERSÕES
+                    <br>
+
+                    <span>
+                        CONTINUAM SENDO NOSSAS.
+                    </span>
+                </h2>
+
+            </div>
+
+
+            <div class="final-box reveal">
+
+                <small>
+                    FINAL EVIDENCE · P2 COMPLETE
+                </small>
+
+                <h3>
+                    VOCÊ VIU
+                    <span>
+                        OS DOIS LADOS.
+                    </span>
+                </h3>
+
+                <p>
+                    Talvez a melhor parte de uma história
+                    seja exatamente essa:
+
+                    duas pessoas nunca vivem
+                    o mesmo momento do mesmo jeito.
+
+                    E ainda assim, podem olhar para trás
+                    e reconhecer que estavam no mesmo lugar,
+                    vivendo algo que importou.
+                </p>
+
+
+                <div class="seal">
+                    L❤️M
+                </div>
+
+            </div>
+
+
+            <!-- NAVEGAÇÃO -->
+
+            <div class="chapter-buttons">
+
+                <a
+                    href="persona1.html"
+                    class="chapter-btn page-link"
+                >
+
+                    <div>
+
+                        <small>
+                            ANTERIOR
+                        </small>
+
+                        <strong>
+                            ← VOLTAR PARA P1
+                        </strong>
+
+                    </div>
+
+                    <div class="chapter-number">
+                        01
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="persona3.html"
+                    class="chapter-btn page-link"
+                >
+
+                    <div>
+
+                        <small>
+                            PRÓXIMO
+                        </small>
+
+                        <strong>
+                            IR PARA P3 →
+                        </strong>
+
+                    </div>
+
+                    <div class="chapter-number">
+                        03
+                    </div>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer>
+        P2 · THE STORY HAS TWO SIDES · LUCIELE + MIGUEL
+    </footer>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =====================================================
+           TRANSIÇÃO ENTRE PÁGINAS
+        ====================================================== */
+
+        document.querySelectorAll(".page-link").forEach(link => {
+
+            link.addEventListener("click", event => {
+
+                const href =
+                    link.getAttribute("href");
+
+                if (
+                    !href ||
+                    href.startsWith("#") ||
+                    href.startsWith("http")
+                ) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                document.body.classList.add("leaving");
+
+                setTimeout(() => {
+
+                    window.location.href = href;
+
+                }, 280);
+
+            });
+
+        });
+
+
+        /* =====================================================
+           REVEAL
+        ====================================================== */
+
+        const revealElements =
+            document.querySelectorAll(".reveal");
+
+
+        const revealObserver =
+            new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target.classList.add(
+                                "visible"
+                            );
+
+                            revealObserver.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+
+        revealElements.forEach(
+            (element, index) => {
+
+                element.style.transitionDelay =
+                    `${(index % 5) * 60}ms`;
+
+                revealObserver.observe(
+                    element
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           RUMOR BOARD
+        ====================================================== */
+
+        const rumorCards =
+            document.querySelectorAll(
+                ".rumor-card"
+            );
+
+        const openedCount =
+            document.getElementById(
+                "openedCount"
+            );
+
+        const evidenceTitle =
+            document.getElementById(
+                "evidenceTitle"
+            );
+
+        const evidenceText =
+            document.getElementById(
+                "evidenceText"
+            );
+
+
+        const rumors = [
+
+            {
+                title:
+                    "ARQUIVO 01 · DISSERAM QUE...",
+
+                text:
+                    "Era só uma conversa. " +
+                    "A parte que não entrou no rumor " +
+                    "é que algumas conversas simplesmente " +
+                    "deixam uma marca diferente. " +
+                    "<strong>O boato acertou a cena. " +
+                    "Errou o significado.</strong>"
+            },
+
+            {
+                title:
+                    "ARQUIVO 02 · OUVI FALAR...",
+
+                text:
+                    "Alguém percebeu antes dos dois. " +
+                    "Não porque soubesse do futuro, " +
+                    "mas porque algumas mudanças aparecem " +
+                    "primeiro nos detalhes. " +
+                    "<strong>Quem olhava de fora também " +
+                    "enxergava alguma coisa.</strong>"
+            },
+
+            {
+                title:
+                    "ARQUIVO 03 · A VERDADE...",
+
+                text:
+                    "Não existe uma única versão perfeita. " +
+                    "Existe o que cada pessoa sentiu, " +
+                    "lembrou e carregou daquele instante. " +
+                    "<strong>A verdade ficou maior " +
+                    "que o rumor.</strong>"
+            },
+
+            {
+                title:
+                    "ARQUIVO 04 · REGISTRO FINAL...",
+
+                text:
+                    "Duas pessoas podem contar o mesmo " +
+                    "momento de formas completamente " +
+                    "diferentes e, ainda assim, " +
+                    "as duas estarem dizendo a verdade. " +
+                    "<strong>Porque a memória também " +
+                    "tem ponto de vista.</strong>"
+            }
+
+        ];
+
+
+        const openedRumors =
+            new Set();
+
+
+        rumorCards.forEach(card => {
+
+            card.addEventListener(
+                "click",
+                () => {
+
+                    const index =
+                        Number(
+                            card.dataset.rumor
+                        );
+
+                    const data =
+                        rumors[index];
+
+
+                    rumorCards.forEach(
+                        other => {
+
+                            other.classList.remove(
+                                "selected"
+                            );
+
+                        }
+                    );
+
+
+                    card.classList.add(
+                        "selected"
+                    );
+
+
+                    evidenceTitle.textContent =
+                        data.title;
+
+
+                    evidenceText.innerHTML =
+                        data.text;
+
+
+                    evidenceText.classList.remove(
+                        "glitch"
+                    );
+
+
+                    void evidenceText.offsetWidth;
+
+
+                    evidenceText.classList.add(
+                        "glitch"
+                    );
+
+
+                    openedRumors.add(
+                        index
+                    );
+
+
+                    openedCount.textContent =
+                        openedRumors.size;
+
+                }
+            );
+
+        });
+
+
+        /* =====================================================
+           MEMÓRIAS
+        ====================================================== */
+
+        const memories = [
+
+            {
+                leftTitle:
+                    "FOI NAQUELE MOMENTO.",
+
+                leftText:
+                    "Eu lembro da sensação antes " +
+                    "de lembrar das palavras. " +
+                    "Tinha alguma coisa diferente ali, " +
+                    "mesmo que ninguém tivesse colocado " +
+                    "nome nela.",
+
+                leftQuote:
+                    "“Eu percebi antes de entender.”",
+
+                rightTitle:
+                    "TALVEZ EU SÓ ESTIVESSE VIVENDO.",
+
+                rightText:
+                    "Do outro lado, a mesma cena " +
+                    "parecia mais simples. " +
+                    "Era só um momento bom, " +
+                    "daqueles que a gente não sabe " +
+                    "que vai guardar.",
+
+                rightQuote:
+                    "“Eu só sabia que estava feliz.”"
+            },
+
+
+            {
+                leftTitle:
+                    "O SILÊNCIO DISSE MUITO.",
+
+                leftText:
+                    "Talvez nem tenha sido necessário " +
+                    "responder. Às vezes a parte mais " +
+                    "marcante de uma conversa está " +
+                    "exatamente no que ficou sem ser dito.",
+
+                leftQuote:
+                    "“Eu entendi mesmo sem ouvir.”",
+
+                rightTitle:
+                    "EU ACHEI QUE NÃO ERA NADA.",
+
+                rightText:
+                    "Para quem estava dentro da situação, " +
+                    "o silêncio podia parecer normal. " +
+                    "Só depois algumas lembranças " +
+                    "ganham outra leitura.",
+
+                rightQuote:
+                    "“Naquela hora eu não pensei tanto.”"
+            },
+
+
+            {
+                leftTitle:
+                    "EU RI DE VERDADE.",
+
+                leftText:
+                    "Tem risadas que ficam porque não são " +
+                    "bonitas ou perfeitas. Elas ficam " +
+                    "porque foram espontâneas e aconteceram " +
+                    "no lugar certo.",
+
+                leftQuote:
+                    "“Foi impossível não lembrar depois.”",
+
+                rightTitle:
+                    "FOI SÓ MAIS UMA PIADA.",
+
+                rightText:
+                    "A piada era simples. " +
+                    "O momento é que fez tudo parecer " +
+                    "maior do que deveria.",
+
+                rightQuote:
+                    "“Eu nem imaginava que isso ia ficar.”"
+            },
+
+
+            {
+                leftTitle:
+                    "EU ESCOLHERIA DE NOVO.",
+
+                leftText:
+                    "Mesmo sabendo tudo o que viria depois, " +
+                    "aquela pequena decisão ainda parece " +
+                    "uma das coisas mais certas que poderiam " +
+                    "ter acontecido.",
+
+                leftQuote:
+                    "“Talvez eu já soubesse.”",
+
+                rightTitle:
+                    "EU FUI SEM SABER.",
+
+                rightText:
+                    "Não existe coragem em toda escolha. " +
+                    "Às vezes a gente só vai, e depois percebe " +
+                    "que aquela decisão mudou a direção " +
+                    "da história.",
+
+                rightQuote:
+                    "“Foi mais simples do que parece olhando agora.”"
+            }
+
+        ];
+
+
+        const tabs =
+            document.querySelectorAll(
+                ".memory-tab"
+            );
+
+        const leftTitle =
+            document.getElementById(
+                "leftTitle"
+            );
+
+        const leftText =
+            document.getElementById(
+                "leftText"
+            );
+
+        const leftQuote =
+            document.getElementById(
+                "leftQuote"
+            );
+
+        const rightTitle =
+            document.getElementById(
+                "rightTitle"
+            );
+
+        const rightText =
+            document.getElementById(
+                "rightText"
+            );
+
+        const rightQuote =
+            document.getElementById(
+                "rightQuote"
+            );
+
+        const memoryRange =
+            document.getElementById(
+                "memoryRange"
+            );
+
+        const divider =
+            document.getElementById(
+                "memoryDivider"
+            );
+
+        const rangeValue =
+            document.getElementById(
+                "rangeValue"
+            );
+
+        const memoryStatus =
+            document.getElementById(
+                "memoryStatus"
+            );
+
+
+        let currentMemory = 0;
+
+
+        function updateMemory(index) {
+
+            currentMemory =
+                index;
+
+
+            const memory =
+                memories[index];
+
+
+            tabs.forEach(
+                (tab, tabIndex) => {
+
+                    tab.classList.toggle(
+                        "active",
+                        tabIndex === index
+                    );
+
+                }
+            );
+
+
+            leftTitle.textContent =
+                memory.leftTitle;
+
+            leftText.textContent =
+                memory.leftText;
+
+            leftQuote.textContent =
+                memory.leftQuote;
+
+
+            rightTitle.textContent =
+                memory.rightTitle;
+
+            rightText.textContent =
+                memory.rightText;
+
+            rightQuote.textContent =
+                memory.rightQuote;
+
+
+            [
+                leftTitle,
+                leftText,
+                leftQuote,
+                rightTitle,
+                rightText,
+                rightQuote
+            ].forEach(element => {
+
+                element.classList.remove(
+                    "glitch"
+                );
+
+                void element.offsetWidth;
+
+                element.classList.add(
+                    "glitch"
+                );
+
+            });
+
+
+            memoryRange.value = 50;
+
+            updateSlider();
+
+        }
+
+
+        function updateSlider() {
+
+            const value =
+                Number(
+                    memoryRange.value
+                );
+
+
+            rangeValue.textContent =
+                `${value}%`;
+
+
+            divider.style.left =
+                `${value}%`;
+
+
+            if (
+                value <= 20
+            ) {
+
+                memoryStatus.textContent =
+                    `A leitura está quase toda com ` +
+                    `LUCIELE · memória ${currentMemory + 1}.`;
+
+            } else if (
+                value < 40
+            ) {
+
+                memoryStatus.textContent =
+                    "LUCIELE pesa mais na lembrança " +
+                    "· ainda existe outra versão por baixo.";
+
+            } else if (
+                value <= 60
+            ) {
+
+                memoryStatus.textContent =
+                    "50/50 quase perfeito · duas leituras " +
+                    "diferentes · um único momento.";
+
+            } else if (
+                value < 80
+            ) {
+
+                memoryStatus.textContent =
+                    "MIGUEL começa a ocupar mais espaço " +
+                    "· a mesma cena ganha outro tom.";
+
+            } else {
+
+                memoryStatus.textContent =
+                    `A leitura está quase toda com ` +
+                    `MIGUEL · memória ${currentMemory + 1}.`;
+
+            }
+
+        }
+
+
+        tabs.forEach(
+            (tab, index) => {
+
+                tab.addEventListener(
+                    "click",
+                    () => {
+
+                        updateMemory(
+                            index
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        memoryRange.addEventListener(
+            "input",
+            updateSlider
+        );
+
+
+        /* =====================================================
+           MENSAGENS
+        ====================================================== */
+
+        document.querySelectorAll(
+            ".message"
+        ).forEach(message => {
+
+            message
+                .querySelector(
+                    ".message-header"
+                )
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        message.classList.toggle(
+                            "open"
+                        );
+
+                    }
+                );
+
+        });
+
+
+        /* =====================================================
+           PARALLAX DO HERO
+        ====================================================== */
+
+        const heroArt =
+            document.querySelector(
+                ".split-art"
+            );
+
+
+        window.addEventListener(
+            "mousemove",
+            event => {
+
+                if (
+                    window.innerWidth < 900
+                ) {
+                    return;
+                }
+
+
+                const x =
+                    event.clientX /
+                    window.innerWidth -
+                    0.5;
+
+
+                const y =
+                    event.clientY /
+                    window.innerHeight -
+                    0.5;
+
+
+                heroArt.style.transform =
+                    `rotate(${1.3 + x * 2}deg)
+                     translate(${x * 5}px, ${y * 5}px)`;
+
+            }
+        );
+
+
+        /* =====================================================
+           INICIALIZAÇÃO
+        ====================================================== */
+
+        updateMemory(0);
+
+    </script>
+
+</body>
+</html>
