@@ -130,7 +130,7 @@ unlockButton.addEventListener('click', () => {
       document.body.classList.add('unlocking');
 
       setTimeout(() => {
-        window.location.href = 'index.html';
+      window.location.href = 'entrada.html';
       }, 760);
     }
 
